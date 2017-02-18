@@ -1,0 +1,809 @@
+
+\input{layout.tex}
+
+% Front Matter
+
+\newcommand{\titleLineOne}{Detection of Higher-Level Concepts}
+\newcommand{\titleLineTwo}{ in Highly-Linked Big Data}
+\newcommand{\titleLineThree}{}
+\newcommand{\documentdate}{December 22, 2015}
+\newcommand{\studentname}{Max Mustermann}
+\newcommand{\abstracttext}{Short version of the thesis in 250 words.}
+\newcommand{\acktext}{First of all, I would like to...}
+
+\begin{document} 
+
+%\input{frontmatter.tex}
+
+% Body Matter (use input to add chapters)
+
+%\chapter{Introduction}
+%All the reader needs to know to get introduced to the topic. What is this thesis about? %Why is it interesting? Give the reader a brief idea of the structure of the thesis. One %page.
+\chapter{Background}
+% The goal of a detection system is to group together stories that discuss the same event.
+%Necessary background for topic, in order to understand the problem, motivation, related %work and contribution. Approximately 10 pages.
+In this section, we will give an overview of the needed theoretical background to understand this thesis.
+\section{Big Data}
+Today’s society is witnessing an exponential increase in the amount of generated data. For instance, retailers, social medias, organizations in financial and healthcare sectors are all generating large volumes of data that need to be collected and analyzed to make the appropriate decisions. In this section, we will give an overview of Big Data characteristics and analytics methods.
+ \subsection{Definition}
+The term Big Data applies to information that could not be processed using traditional processes or tools \cite{a:IBM}.
+For instance, Edd Dumbill defined Big Data according to its processing aspect as follows:\\
+		"Big data is data that exceeds the processing capacity of conventional database systems. The data is too big,   		moves too fast, or doesn’t fit the structures of your database architectures" \cite{a:def1}.\\
+Another definition of Big Data based on the three dimensions: \textit{Volume}, \textit{Variety} and \textit{Velocity} has emerged. For instance, Gartner Inc. defined Big Data as follows: \\
+		"Big data is high-volume, high-velocity and/or high-variety information assets that demand cost-effective, innovative forms of information processing that enable enhanced insight, decision making, and process automation." \cite{a:gartner}.\\
+	Some other definitions add the term \textit{Veracity} to the 3 V model to characterize Big Data \cite{a:veracity}.\\
+	In the remainder of this section, we will go through each of these Big Data aspects. 
+ 	\begin{enumerate}
+		\item Volume: \\ refers to the quantity of data which is reported in multiple terabytes and petabytes.  
+	   	\item Variety: \\ refers to the diverse types of data which can be:\\
+		structured data refers to information with a high degree of organization, such that inclusion in a relational database is seamless and readily searchable by simple, straightforward search engine algorithms or other search operations; whereas unstructured data is essentially the opposite. The lack of structure makes compilation a time and energy-consuming task. It would be beneficial to a company across all business strata to find a mechanism of data analysis to reduce the costs unstructured data adds to the organization. \cite{a:https://brightplanet.com/2012/06/structured-vs-unstructured-data/}
+	   	\begin{description}
+		\item[-] structured data: refers to highly organized data that can be easily stored in a relational database. \cite{a:https://brightplanet.com/2012/06/structured-vs-unstructured-data/} \\
+		\item[-] unstructured data:.
+refers to data with no structural organization such as texts, images, audios and videos. \cite{a:https://jeremyronk.wordpress.com/2014/09/01/structured-semi-structured-and-unstructured-data/}\\
+		\item[-] semi-structured data: refers to data that have some organizational properties, after some process it could be stored in a relational database. Examples of this type of data include XML and JSON documents. NoSQL databases are considered as semi structured. \cite{a:https://brightplanet.com/2012/06/structured-vs-unstructured-data/} 
+		\end{description}
+			
+		\item Velocity:\\ it refers to the rate at which data are generated and the
+speed at which it should be analyzed and acted upon \cite{a:Beyond  the  hype}.
+	    \item Veracity: \\ it refers to the biases, noise and abnormality in data. 	 
+	\end{enumerate}	
+
+\subsection{Big Data analytics}
+Big Data analytics aims to obtain meaningful results from big data by providing algorithms that include statistical models, machine learning, text analytics  and other advanced data-mining techniques.
+\subsubsection{Text analytics}
+Text analytics deals with analyzing unstructured text, extracting relevant information, and transforming it into structured information that can then be leveraged in various ways. It uses techniques from Natural Language Processing (NLP), knowledge discovery, data mining, information retrieval, and statistics..
+\begin{enumerate}
+\item  Natural Language Processing: \\
+ NLP is a complex field that aims  to develop tools and techniques to make computer systems understand and manipulate natural languages to perform the desired tasks. It generally makes use of linguistic concepts such as grammatical structures and parts of speech to determine who did what to whom, when, where, how, and why \cite{a:BigData} \cite{a:NLP}.\\
+NLP performs analysis on text at different levels:
+\begin{itemize}
+\item Lexical/morphological:  deals with understanding the meaning of words and parts of speech (such as noun, verb, adjective) in the context of the text provided. The lexical analyzer connects each word with its corresponding label in a dictionary. The morphological analyzer identifies words or phrases in one sentence and marks each word with a token symbol. The identified tokens are classified according to their grammatical class \cite{a:analyzer http://www.sbmac.org.br/dincon/trabalhos/PDF/statistics/68066.pdf}.
+\item Syntactic analysis aims to check that a sentence is well formed and to break it up into a structure that shows
+the syntactic relationships between the different words. This is done using a dictionary of word definitions and a set of grammar rules \cite{a:https://www.scm.tees.ac.uk/isg/aia/nlp/NLP-overview.pdf}.
+\item Semantic analysis determines the possible meanings of a sentence. This can include examining word order and sentence structure and disambiguating words by relating the syntax found in the phrases, sentences, and paragraphs.
+\item Discourse-level analysis attempts to determine the meaning of text beyond the sentence level \cite{a:BigData}.
+\end{itemize}
+These techniques are generally combined with other statistical or linguistic techniques to automate the tagging and markup of text documents to extract the following informations \cite{a:BigData}:
+\begin{itemize}
+\item  Terms: these are the keywords.
+\item  Entities: or named entities, these are specific examples of
+abstractions (tangible or intangible). Examples are names of persons,
+names of companies, geographical locations, contact information, dates,
+times, currencies, titles and positions, and so on. 
+\item  Facts: Also called relationships. They indicate the who/what/where relationships
+between two entities. 
+\item  Events: events usually contain a time dimension and often cause facts to
+change. 
+\item  Concepts: These are sets of words and phrases that indicate a particular
+idea or topic with which the user is concerned. This can be done
+manually or by using statistical, rule-based, or hybrid approaches to
+categorization. Concepts can be defined by users to suit their particular needs.
+\item  Sentiments: Sentiment analysis is used to identify viewpoints or emotions
+in the underlying text. Some techniques do this by classifying text as, for example, subjective (opinion) or objective (fact), using machine learning or NLP techniques.
+\end{itemize}
+\end{enumerate}
+\subsection{Big Data Processing Frameworks}
+The MapReduce \cite{a:mapR} framework stayed for a long time the reference standard for big data processing,
+however, it is not suited for wide range of applications, such as
+real time and machine learning. In the last years, a variety of
+big data processing engines that tackel its shortcomings were
+developped.
+MapReduce revolutionized computation over huge data sets by
+offering a simple model for writing programs that could execute in parallel across hundreds to thousands of machines. 
+\subsubsection{The difference between batch and stream processing}
+\begin{itemize}
+\item[-] batch processing: refers to a type of engines that process finite “batch” data sets as bounded data \cite{a:Akidu}. Batch processing systems are based on the ETL technology. ETL tools are used to transform the data into the format required by the data warehouse, which provide business users with a way to consolidate information across disparate sources (such as enterprise resource planning [ERP] and customer relationship management [CRM]) to analyze and report on data relevant to their specific business focus, by performing the following functions:
+\begin{itemize}
+\item [-] Extract: Read data from the source database.
+\item [-] Transform:Convert the format of the extracted data so that it conforms to the requirements of the target database. Transformation is done by  using rules or merging data with other data.
+\item [-] Load: Write data to the target database.
+\end{itemize}
+ ETL tools extracted the data to an intermediary location to perform the transformation before loading the 
+data to the data warehouse.
+Data warehouses provide business users with a way to consolidate information across disparate sources (such as enterprise resource planning [ERP] 
+and customer relationship management [CRM]) to analyze and report on 
+data relevant to their specific business focus.
+\item[-] stream processing:
+According to \cite{a:amazon}, streaming data is data that is generated continuously by thousands of data sources, which typically send in the data records simultaneously, and in small sizes (order of Kilobytes). It can also be described as infinite or unbounded data \cite{a:Akidu}.
+Tylor Akidu, an engineer in the Google Cloud DataFlow team, defined stream processing as data processing engine that is designed with infinite data sets in mind \cite{a:Akidu}. For instance, an online gaming company that collects streaming data about player-game interactions, and feeds the data into its gaming platform. It then analyzes the data in real-time, offers incentives and dynamic experiences to engage its players.
+\end{itemize}
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.5]{graphics/BatchStream.PNG} 
+					\caption{ Comparison between batch and stream processing dataflows \cite{a:Flink}} \label{flink} 
+				\end{figure}
+In a batch-processing scenario, the transactions databases collect event data during the day, which is bulk loaded to a staging database at night. A large ETL process then executes to produce aggregations on this data and store these results to the data warehouse. The Business Intelligence applications then present the reports based on  these aggregates to the business users the following day. Users have to wait an entire day to get insights into business 
+operations.\\
+Streaming systems operate differently. The transactions database will stream the logs in near real-time which are processed by a streaming system which will produce aggregations within intervals such as time. For example, calculate aggregates like total sales by region for every 5-minute interval. We will soon see that other types of intervals 
+are also possible in Flink. These aggregates will be stored in the Data Warehouse which provide a more real-time insight into business operations to the business users. The intervals should not be too small (ex. 5-seconds) because Data Warehouses are typically designed for optimal reads (lots of indexes) which will slow down the writing of the granular aggregates and cause the overall system to have bottlenecks.				
+
+\subsubsection{Apache Flink}
+Apache Flink is an open source platform that uses a common runtime for scalable batch and stream data processing. Flink's stack includes the DataStream and the DataSet APIs for creating stream processing and batch processing applications respectively. It also bundles libraries for domain-specific use cases such as Machine learning and graph analytics. A Flink Program can be easily deployed according to three different modes: locally, on a existing YARN or a Standalone cluster or on existing clusters in the cloud.
+\begin{itemize}
+\item[-] Local Mode: ... \\
+%Local mode is a pseudo distributed mode which runs all the daemons in the single jvm. It uses AKKA framework for %parallel processing which underneath uses multiple threads.
+\item[-] Standalone Cluster Mode: ...\\
+%In this setup, different daemons runs on different jvms on a single machine or multiple machines. This mode often %used when we want to run only Flink in our infrastructure.
+\item[-]YARN:... \\
+%This mode makes flink run on YARN cluster management. This mode often used when we want to run flink on our existing hadoop clusters.
+\end{itemize}
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/Flink-Stack.PNG} 
+					\caption{ Flink Stack \cite{a:BigData}} \label{flink} 
+				\end{figure}
+
+
+\textbf{- Flink's architecture overview:}\\
+After a Flink program is submitted, three processes are put into place to compile it:
+\begin{itemize}
+\item[-]  A \textbf{Client} is created that performs the pre-processing and transforms the program into an optimized JobGraph, a generic parallel data flow with arbitrary tasks that consume and produce data streams, and sends it to  the JobManager. After that, it can disconnect, or stay connected to receive progress reports.The client program runs either as part of the Java/Scala program that triggers the execution, or in the command line process. 
+\item[-] 	The \textbf{JobManagers} (also called masters) they ensure the program parallelization by coordinating the distributed execution of the execution Graph. They schedule tasks by assigning tasks to Task Managers, they also perform other tasks such as checkpoints coordination and recovery on failures coordination.\\
+A Flink program uses at least one Job Manager. To ensure high-availability, a setup would use multiple JobManagers, with one leader and the other JobManagers as standby .
+\item[-] 	The \textbf{TaskManagers} (also called workers) execute the tasks (or more specifically, the subtasks) of a dataflow, and buffer and exchange the data streams.
+Operations are split up into tasks depending on the specified parallelism § Each parallel instance of an operation runs in a separate task slot § The scheduler may run several tasks from different operators in one task slot
+There must always be at least one TaskManager. \\
+ TaskManagers connect to JobManagers, announcing themselves as available, and are assigned work.\\
+\end{itemize} 
+			\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/compilation.PNG} 
+					\caption{Flink Architecture Overview} \label{archi} 
+			\end{figure}
+				
+
+\textbf{- Apache Flink Programming Model:}
+\begin{itemize}
+\item[-] Program Dataflow:\\
+ 
+ A Flink program can be viewed as a streaming dataflow that takes the data streams from a source, performs transformation operations on it and stores the resulting streams in a sink.
+Programs in Flink are inherently parallel and distributed.
+ 				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/concepts.PNG} 
+					\caption{Flink Streaming dataflow} \label{dataflow} 
+				\end{figure}
+Data sources create the initial Datasets, from Text or CSV files or from Java collections. \\
+					Data sinks store the returned values after the transformations in a Dataset.\\
+					Data transformations transform one or more DataSets into a new DataSet. Programs can combine multiple transformations into sophisticated assemblies. Some common transformations and their definitions according to Flink's documentation \cite{transf} include:
+\begin{itemize}
+\item[-] Map(): \\	
+Takes one element and produces one element.
+\item[-] Filter(): \\	
+Evaluates a boolean function for each element and retains those for which the function returns true.
+\item[-] Reduce(): \\	
+Combines a group of elements into a single element by repeatedly combining two elements into one. Reduce may be applied on a full data set, or on a grouped data set.
+\item[-] Join(): \\	
+	Joins two data sets by creating all pairs of elements that are equal on their keys.
+	 \end{itemize}
+ \item[-]\textbf{ Time:}
+Time
+When processing data which relate to events in time, there are three inherent domains of time to consider. 
+	\begin{itemize}
+\item   Event time:\\
+ is the time at which the event itself actually occurred, it is usually described by a timestamp attribute in the event data and is assigned by the source of the event. Flink accesses event timestamps via timestamp assigners.
+ Once assigned, the event time for a given event never changes.
+ 
+\item 	Ingestion time:\\ 
+This is the time the event arrives to the Flink dataflow at the source operator. It is assigned by the Flink system.  Like the event time, it is assigned once and never changes. 
+
+\item	Processing Time:\\
+  is the current time according to the system clock at which an event is observed at any given point during processing at each operator that performs a time-based operation. It changes constantly for each event as it arrives for processing at an operator instance.
+\end{itemize}
+
+ \item[-] Window: \\
+Windowing slices up a dataset into finite chunks for processing as a group, it contains multiple events on which several operation types such as aggregation can be applied on events in a window. Windowing can be applied to both batch and stream processing.\\
+In batch processing where bounded data is processed, windowing is an optional concept of semantic usefulness. \\
+In stream processing where unbounded data is processed, the windowing concept is crucial for some operations to delineate finite boundaries in most forms of grouping such as aggregation and unnecessary for others such as filtering and mapping.\\
+Flink contains two windows types: built-in time and count based windows that can be further subdivided into 
+tumbling and sliding windows.
+\begin{description}
+\item[-] Time-based windows: time windows group stream elements by time. They can be defined as tumbling or sliding. 
+\begin{description}
+\item[-] Tumbling windows: A tumbling time window collects events for a specific time and applies a function on all events in the window after the time is passed and each event is assigned to one only one window. \\
+Let's consider the example of an online gaming application, where a gaming server receives immediately after the completion of an instance of game data streams that contain the player identifier, an event time stamp and the score. let's suppose we want to track the generated events each 5 seconds. Figure \ref{win1} illustrates this example.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/thumbling.PNG} 
+					\caption{ Tumbling windows} \label{win1} 
+				\end{figure}
+\end{description}
+
+ Time windows can also be sliding.Figure \ref{win2} illustrates a sliding window which is one minute long which slides every 30 seconds.
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/sliding.PNG} 
+					\caption{ Sliding windows} \label{win2} 
+				\end{figure}
+
+\item[-] Count-based windows: \\
+				in this case, each window is evaluated based on the number of elements it contains. We also distinguish here between tumbling and sliding count based windows. \\
+In tumbling count window, the window pane is evaluated when the element count in the pane reaches a pre-defined level, whereas in sliding count windows, the window pane is evaluated based on the number of elements it contains and how much it slides by.
+				
+
+\end{description}
+
+
+
+
+
+\end{itemize}
+
+
+
+\subsubsection{Apache Spark}
+Apache Spark is an open source framework that combines an engine for distributing programs across clusters of machines with an elegant model for writing programs atop it which was originated at the UC Berkeley AMPLab\cite{a:Spark1}. \\
+Figure \ref{stack} depicts the Apache Spark stack components. 
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.9]{graphics/sparkStack.PNG} 
+					\caption{The components of the Spark Stack} \label{stack} 
+				\end{figure}
+
+A Spark program follows a master/slave architecture with one central coordinator called driver that launches
+various parallel operations on cluster nodes called executors via a cluster manager such as Hadoop YARN or the standalone Hadoop manager. Figure \ref{spark} depicts the components of a distributed Spark application.
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.9]{graphics/spark.PNG} 
+					\caption{The components of a distributed Spark application\cite{a:Spark2}} \label{spark} 
+				\end{figure}
+				The Spark engine implicitly creates a logical directed acyclic graph (DAG) of operations and optimizes this graph by rearranging and combining operators where possible. For instance if we suppose that a Spark job contains a map operation followed by a filter operation, the Spark DAG optimizer would rearrange the order of these operators, so that the number of records would be reduced before a map operation takes place \cite{a:Spark2}.\\
+When the driver runs, it converts this logical graph into a physical execution plan, where each stage of this plan consists of multiple tasks. The Spark Driver tries to schedule each task in an appropriate Executor.\\ 
+				The resilient distributed dataset (RDD)is the Spark’s core abstraction for working with data,  a fault-tolerant collection of elements that can be operated on in parallel \cite{a:Spark3}.
+Every Spark program consists of creating some input RDDs from external data and performing operations on those RDDs. The two major types of operations are:
+\begin{itemize}
+\item \textbf{Transformations:} They take an RDD as an input and produce one or many RDDs. Existing transformations include map(), filter()%, count(), distinct().
+\item \textbf{Actions:} They are computations performed on a RDD that return a value. Some supported actions include reduce()%, count(), first(), and foreach().
+\end{itemize}
+The RDD contents are stored into memory across the cluster nodes, meaning that the future recomputations on an RDD content need not to recompute it or reload it from disk \cite{a:Spark1}.
+\subsubsection{Performance comparison between Apache Spark and Apache Flink}
+ 	Ovidiu-Cristian Marcu et al. provided in \cite{a:comp} a performance comparison between Apache Spark and Apache Flink. The authors performed a series of extensive experiments involving six representative workloads for batch
+and iterative processing. \\As for batch workloads, three benchmarks implementing the Word Count\cite{wc}, Grep\cite{wc} and Tera Sort\cite{wc} were selected.\\ As for iterative workloads, three benchmarks evaluating the loop-caching: K-Means, Page Rank\cite{wc} and Connected Components\cite{wc} algorithms were selected.\\ 
+For both frameworks, some parameters have influence on some performance metrics such as the overall execution time, scalability and resource consumption. \\ These parameters manage the task parallelism, the
+network behavior during the shuffle phase, the memory and the data serialization. 
+ For the batch workloads, the goal was to validate strong and weak scalability. For the iterative workloads, the focuse was on scalability, caching and pipelining performance.\\
+Two experiment secanrios were conducted, the first scenario consists of having the same dataset size and increasing the number of nodes to characterize the weak scalability, the second scenario consists of having the same the number of nodes and increasing the dataset size to characterize the strong scalability.
+\begin{description}
+\item[- ] Batch Workload:\\
+
+\begin{tabular}{|l|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{2cm}|}
+    \hline
+      & \textbf{Word Count} & \textbf{Grep} & \textbf{Tera Sort}\tabularnewline 
+    \hline 
+      \textbf{Weak Scalability} & both frameworks show a similar performance for a small number of nodes (2 to 8).  
+      				   For a larger number (16 and 32), Flink performs slightly better. 
+      				  & Spark outperforms Flink, with up to 20\% smaller execution times for large datasets (16 and 						32 nodes).
+ 						& Flink is performing on average better than Spark, showing smaller execution time. \tabularnewline 
+     \hline 
+      \textbf{Strong Scalability} & Flink constantly outperforms Spark by 10\%. 
+      					 & Spark outperforms Flink  
+      					 & Flink’s advantage is increasing with larger clusters. \tabularnewline 
+     \hline
+ \end{tabular}
+     \item[- Iterative Workload:]     
+     \begin{description}
+     \item[- KMeans: ] 
+     A dataset of 51 GB has been used in both platforms to evaluate the performance. Flink outperforms Spark by more than 10\% .
+	\item[- Page Rank and Connected components : ] 
+ Small, medium and large graphs have been used to evaluate the performance of these two algorithms.\\
+ For small graphs, Flink performs slightly better for both algorithms. For medium-size graphs, for the Connected Components algorithm, Flink outperforms Spark by 30\%. Whereas Spark is more efficient for large graphs.
+   \end{description}
+ 
+Spark is about 1.7x faster than Flink for large graph processing, while the latter outperforms Spark up to 1.5x for batch and small graph workloads using sensitively less resources and being less tedious to configure. 
+
+ \end{description}    
+\section{Machine Learning}
+
+Machine Learning is the science of providing computers with the ability to learn from data \cite{a:ML}.
+According to Tom Mitchell, a computer program is said to learn from experience E with respect to some task T and some performance measure P, if its performance on T, as measured by P, improves with experience E \cite{a:Tom:MachineLearning}.\\
+For instance, the spam filter is a machine learning program that takes a training set composed of spam emails that are labeled by the user and non-spam emails. The system learns form this training data, which constitutes the experience E to perform the task T of labeling new emails as spam or not. The performance P can be measured by calculating the ratio of correctly classified emails \cite{a:ML}.\\
+Machine Learning systems can be classified based on the amount of human supervision they get while being trained. In the remainder we will give an overview of the three types of learning: supervised, unsupervised and semi-supervised learning.
+
+\subsection{Unsupervised Learning}
+In  unsupervised learning, as you might guess, the training data is unlabeled. The system tries to learn without a teacher. Examples of unsupervised learning algorithms include: Clustering, Visualization and dimensionality reduction.
+\subsubsection{Label Propagation Algorithm}
+This algorithm was proposed by Raghavan et al. in \cite{a:labelprop}. It is graph-based semi-supervised learning algorithm, where the dataset consists of both labeled and unlabeled datapoints.\\
+Let G(V, E) be an undirected network where V is the set of vertices and E is the set of edges. Each node v(v$\in$ V) has a label at time t $L_v (t)$. We denote by $N_(v)$ the set of neighbors of vertex v. the algorithm can be described as follows:
+\begin{enumerate}
+  \item Initialize the labels at all nodes in the network. For a given vertex v , $L_v(0)$ = v.
+  \item In the asynchronous version, where at every update one node updates its current label, for each v $\in$ V chosen in a random order, let: \\
+  $L_v (t) = f (L_(v_(i1))(t), ..., L_(v_(im))(t), L_(v_(i(m+1)))(t − 1), ..., L_(v_(ik))(t − 1)).$ \\where $v_(i1)$ ...  $v_(im)$ are neighbors of v that have already been updated in the current iteration while $v_(im+1)$ ... $v_(ik)$ are neighbors that are not yet updated in the current iteration. \\
+  In the synchronous version, where at every update each node updates its current label, for each v $\in$ V chosen in a random order:\\$L_v (t) = f (L_(v_(i1))(t-1), ... , L_(v_(ik))(t − 1)).$
+ f returns the label occurring with the highest frequency among neighbors and ties are broken uniformly randomly.
+  \item The algorithm converges if every node has a label that the maximum number of their neighbors have, otherwise t is set to t+1, another label propagation iteration is done and the labels are recalculated.
+\end{enumerate}  
+The Figure \ref{lpa} shows the two clusters obtained after running the Label Propagation algorithm on that graph. Each cluster is identified by a color. We notice that this algorithm identifies the highly connected components in a single cluster.
+  
+	  \begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/LP0.png} 
+	  \caption{Initial graph}
+	  \label{lpa}
+	\end{figure}
+	  \begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/LP1.png} 
+	  \caption{First Iteration}
+	  \label{lpa}
+	\end{figure}
+	\begin{figure}[h]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/LP2.png} 
+	  \caption{Final Iteration}
+	  \label{lpa}
+	\end{figure}
+	
+  According to \cite{a:comm}, this algorithm presents some advantages such as it doesn't require parameter, it is easy to implement, fast to execute for large networks, and able to detect valid clusters even in random graphs. However, it may lead to assigning the same label to disconnected communities.
+
+\subsubsection{Kmeans} \label{kmeans}
+Kmeans is an unsupervised learning algorithm that aims to organise data from a given training set into few clusters.\ The Kmeans algorithm proceeds in two steps: First $K$ data items from the set of data points are randomly chosen as initial centroids, then, in the second step, each data point is assigned to the cluster which has the closest centroid and each cluster centroid is moved to the mean of the points assigned to it.\ This second step is repeated until all data points are assigned to one of the $K$ clusters.\\
+
+			The Kmeans algorithm proceeds in two steps: \\
+			- First K data items from the set of data points are randomly chosen as initial centroids. \\
+			- In the second step, each data point is assigned to the cluster which has the closest centroid according to a chosen distance measure and each cluster centroid is moved to the mean of the points assigned to it. This second step is repeated until all data points are assigned to one of the K clusters. \\ Figure \ref{expl1} illustrates those steps. The circles refer to the datapoints and the triangles to the centroids. The datapoints with the same color belong to the same cluster.
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/expKmeans.PNG} 
+					\caption{KMeans clustering example\cite{a:kmeansExple}} \label{expl1} 
+				\end{figure}
+
+			\textbf{- Silhouette Value:}
+			
+				A silhouette is a graphical display for partition techniques which shows  which objects lie  well within their cluster, and which not. The average silhouette width provides an evaluation  of clustering validity and might be used to select an 'appropriate' number of clusters \cite{a:silhouette}.\\
+			 For each data point $i$, the silhouette $s(i)$ is given by the equation \ref{SilEq}:
+				
+				\begin{equation} 
+					s(i)=\frac{b(i)-a(i)}{\max(a(i),b(i))} 
+					\label{SilEq}
+				\end{equation}
+						
+				where $a(i)$ is the average dissimilarity of $i$ with all other data within the same cluster and $b(i)$ is the lowest average dissimilarity of $i$ to any other cluster, of which $i$ is not a member.
+						
+						
+						The instances are colored according to which cluster they belong to.
+						the centroid values are recomputed according to the euclidean distance
+\subsection{Supervised Learning}
+In supervised learning, the training data you feed to the algorithm includes the desired
+solutions, called labels.\\
+A typical supervised learning task is classification.
+Figure \ref{class} illustrates an example of a classification task: the system is trained with many labeled images, the label can be "airplane" or "car", the machine-learning process analyzes those labeled images and builds a model. This model is then used by the prediction process to classify unlabeled images. All the images were correctly labeled.
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/classification.PNG} 
+					\caption{Workflow of a classification example} \label{ref} 
+				\end{figure}
+
+
+	\subsubsection{Logistic Regression}	
+	
+	\subsubsection{Support Vector Machines}
+		\label{svmSection}
+
+			Support Vector Machines have been introduced in 1992 at the COLT conference by Boser, Guyon, Vapnik as a supervised learning approach used to solve classification and regression problems \cite{a:colt92}.
+
+			The simplest kind of support vector machines called Linear SVM aims to find a hyperplane that optimally separates the training vectors into two classes by achieving the maximum separation, such that it will be equidistant to both datasets.\ Support vectors are defined to be a subset of the training data having the minimum distance to the hyperplane.\ An example of a simple linear SVM is illustrated in Figure~\ref{svm}.
+				
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/LSVM.PNG} 
+					\caption{Linear Support Vector Machines \cite{a:SvmSlides}} \label{svm} 
+				\end{figure}
+
+			The goals of SVM are separating the data with a hyper plane and extend this to non-linear boundaries when the data is far from linear and the datasets are inseparable by using the kernel methods that allow SVMs to form nonlinear boundaries, by non-linearly mapping the input data to a high-dimensional space.\ The new mapping is then linearly separable \cite{a:Nello:Svm} \cite{a:Tom:MachineLearning}.
+
+			The kernel functions enable operations to be performed in the input space rather than the potentially high dimensional feature space.\ Various kernel functions can be used \cite{a:Nello:Svm}, such as: \textit{Polynomial}, \textit{Gaussian Radial Basis Function}, as well as \textit{Exponential Radial Basis Function}.
+\chapter{State of the Art}
+%related work. Present state of research and applied solutions concerning the different %aspects relevant to the thesis. Approximately 10 to 15 pages.\\
+%During the last decades, several researchers were interested in the topic %identification field of written texts, because recognizing text topics is a primary %step of other text mining fields.
+
+This chapter gives an overview of existing conducted research that deal with the problem of concept detection from a given dataset.\\ The developed approaches of solving this problem depend on the dataset type. This chapter is divided into two sections. The first section deals with existing approaches on text datasets whereas the second section deals with existing approaches on image and video datatsets.
+\section{Concept Detection in Text Datasets}
+A lot of approaches were developed to detect concepts from texts. For instance, we can distinguish between Term Frequency-Inverse Document Frequency (TF-IDF) based approaches, ontology based approaches and graph based approaches.
+\subsection{TFIDF based approaches}
+\subsubsection*{TF-IDF }
+TF-IDF stands for term frequency-inverse document frequency and it was first presented in 1973 in \cite{a:tfidf}. TF-IDF is the most common term weighting scheme that evaluates the word importance to a document in a collection.\\
+We suppose we have a query term t and a document d. The term frequency $tf_{t}(d)$ depends on the number of occurrences the term t appears in the document d and is calculated as follows: 
+	\begin{equation}
+	tf_{t}(d)= \frac {Number\ of\ occurences\ of\ the\ term\ t \ in\ the\ document\ d}{Total\ number\ of\ terms\ in\ the\ document}
+	\end{equation}
+With the raw term frequency, all terms are considered equally important when it comes to assessing relevancy on a
+query. To attenuate the effect of too often occurring terms in the collection, the term frequency weight of a term t is reduced by the document frequency of the term t $df_{t}$, defined to be the number of documents in the collection that contain a term t.
+Therefore, the inverse document frequency is defined as follows:
+	\begin{equation}
+		idf_{t} =  \log \frac {N}{df_{t}}
+	\end{equation}
+where N is the total number of documents in a collection. Thus the idf of a rare term is high, whereas the idf of a frequent term is likely to be low.
+By combining those twos definitions we get the following composite weight:
+	\begin{equation}
+		tf{\small -}idf_{t}(d)= tf_{t,d}\cdot idf_{t}
+	\end{equation}
+%This metric was further enhanced, for instance in \cite{a:novel} a TF-IDF based weighting scheme to effectively rank the relevance of query terms to a document was developed. Their weighting scheme combines two term frequency components, one that tends to prefer long documents and another one that tends to prefer short documents based on the length of the corresponding query.\\  The scoring formula  that calculates the similitude between the query Q and the document D is depicted in \ref{eq1}:\\
+%\begin{equation}
+%  Sim(Q,D)=\sum_{1}^{|Q|} TFF_{q_{i},D}*TDF_{q_{i},C}
+%\label{eq1}
+%\end{equation}
+%TFF stands for Term Frequency Factor and is obtained by combining the two factors as shown below:
+%\begin{equation}
+%	TFF(q_{i}, D)=w*BRITF(t, D)+(1-w)*BLRTF(q_{i}, D)
+%\end{equation}
+%where  $0<w<1$ and is set to: $w = \frac{2} {1+ \ln(1+|Q|)}$.\\
+%\begin{equation}
+%BRITF(q_{i},D)= \frac{RITF(q_{i},D)} {1+RITF(q_{i},D)}
+%\end{equation}
+%$BRITF(q_{i},D)$ has tendency to prefer long documents and RITF is the Relative Intra-document TF and it is defined as follows:
+%\begin{equation}
+%RITF(q_{i},D)=\frac{log2(1 +TF(q_{i}, D))}{\ln(1 +Avg.TF(D))}
+%\end{equation}
+%where TF($q_{i}$, D) denotes the frequency of the term $q_{i}$ in D and Avg.TF($q_{i}$,D) denotes the average term frequency of D.
+%\begin{equation}
+%BLRTF(q_{i}, D)=\frac{LRTF(q_{i}, D)}{1+LRTF(q_{i}, D)}
+%\end{equation}
+%LRTF is the Length Regularized TF.  $BLRTF(q_{i}, D)$ prefers short documents and longer queries are encountered.
+%\begin{equation}
+%LRTF(q_{i}, D)=TF(q_{i},D)×log2(1+ \frac{ADL(C)}{len(D)})
+%\end{equation}
+%where ADL(C) is the average document length of the collection and len(D) is the length of the document D.\\ 
+%The average elite set term frequency AEC is defined as follows:
+%\begin{equation}
+%AEF(q_{i},C)=\frac{CTF(q_{i},C)}{DF(q_{i},C)}
+%\end{equationj
+%where CTF(t,C) denotes the total occurrence of the term t in the entire collection.\\
+%The final term discrimination value of termt is computed as:
+%\begin{equation}
+%TDF(q_{i},C)=IDF(q_{i},C)×\frac{AEF(q_{i},C)}{1+AEF(q_{i},C)}
+%\end{equation}
+%C denotes the collection, CTF(t,C) denotes the total occurrence of the term t in the entire collection. \\
+\subsubsection*{Concept Keyword Term Frequency/Inverse Document Frequency}
+A TF-IDF based metric called Concept Keyword Term Frequency/Inverse Document Frequency ( ckTF/IDF ) was presented in \cite{a:ck} to efficiency mine concept keywords from identifiers present in the software source code. They used this metric to extract the concept keywords from udos \cite{a:udos}, an educational operating system consisting of 5,000 lines in C code.\\
+\textbf{- Concept Keyword:}\\
+concept keywords are a small subset of the words in identifiers and that represent a key concept that can aid in program understanding.\\
+The authors distinguished between three kinds of concept keywords:
+\begin{itemize}
+\item [-] Ideal concept keywords: they prove to enhance program understanding by performing an objective measurement. 
+\item [-] Human-selected concept keywords: are words that the code user believes they improve program understanding. For instance, \emph{dirent}, which implies “directory entry” is a human selected concept keyword.
+\item [-] Machine-extracted concept keywords: is an algorithm that aims to extract keywords that are approximate to the human selected ones.
+\end{itemize}
+\textbf{- Definition of the ckTF/IDF method:}\\
+The ckTF/IDF method treats one source file as a document. It quantizes tf(t,d) and idf(t) into 0 or 1. The idf(t) is defined as follows:\\
+\begin{equation}
+IDF(t) = \left\{ \begin{array}{rcl}
+1 & \mbox{if} &
+1 \leq df(t) \leq n  \urcorner isprefix(t)\\ 0 && otherwise
+\end{array}\right.
+\end{equation}
+where df(t) is the document frequency of term t, n($\geq 1$) the threshold (default is 1) to quantize tf(t, d) and idf(t) and isprefix(t) predicate is true if and only if t is a prefix for all its occurrences. The metric assumes that prefixes are unlikely to be concept words, for example in the identifier "read\_dirent" from udos \cite{a:udos}, read is a prefix and is a generic verb not a concept keyword, whereas dirent is concept keyword.  \\The term frequency TF(t) in all documents.
+\begin{equation}
+tf(t) = \left\{ \begin{array}{rcl}
+1 & \mbox{if} & \in d, tf(t, d) > n \\ 0 && otherwise
+\end{array}\right.
+\end{equation}
+The word weight for ckTF/IDF is: 
+\begin{equation}
+w(t) = tf(t)* idf(t)
+\end{equation}
+A term t is selected as a machine-extracted concept keyword if w(t) = 1.\\
+If we suppose that n=1 (the default value) then \textit{w(t)}=1 if t exists in only one document, it is not a prefix and there is one document where t occurs more than once. \\
+The authors proposed a method to compute \textit{w(t)} in a fast way. They defined two flags for each term: a local frequency denoted \textit{local(t)} and a global frequency flag denoted \textit{global(t)}. 
+After dividing all identifiers in source code into terms by using some delimiters like underscores, the two flags are computed for each term as follows: 
+\begin{itemize}
+\item [-] if a term t is found twice in a document then local(t) is set. 
+\item [-] if this term t is found in two documents then global(t) is set. 
+\item [-] \textit{w(t)}= 1 if local(t) is set, global(t) is clear, and the term is not a prefix otherwise \textit{w(t)}= 0. 
+\end{itemize}
+\textbf{- Performance evaluation:}\\
+The authors developed a framework called Identifer Exploratory Framework (IEF) for the ckTF/IDF method.
+To evaluate the performance of the ckTF/IDF method, the authors applied the ckTF/IDF and TF/IDF methods to their educational operating system udos’s source code, around 5,000 lines in C \cite{a:udos} and compared the concept keywords extracted by a human programmer with that found by the algorithm.  Therefore, they computed the performance metrics Accuracy and Coverage, which they defined as follows: 
+\[Accuracy = \frac{C_{r}}{C_{m}}\]
+where $C_{r}$ is the total number of concept keywords that both human and algorithm have chosen and $C_{m}$ is the total number of all machine extracted concept keywords.
+\[Coverage = \frac{C_{r}}{C_{h}} \]
+where  $C_{h}$ is the total number of human extracted concept keywords. \\
+For the ckTF/IDF method, they achieved an accuracy of 57\%  and a coverage of 26\%, whereas for the TF/IDF method, they obtained as accuracy of 28\%  and a coverage of 13\%. Thus, ckTF/IDF delivers twice better accuracy and coverage than TF/IDF. \\
+The authors have also applied the ckTF/IDF and TF/IDF methods on the Ruby interpreter to compare the execution speeds and found that ckTF/IDF is about 6 times faster than TF/IDF.
+ 
+\subsection{Ontology based approaches} 
+In this section, we will present two ontology based approaches to detect documents' concepts. First, let us define what is an ontology.
+\subsubsection{What is an ontology?}
+According to R. Studer et al., an ontology as a formal, explicit specification of a shared conceptualization \cite{a:def}. In other words, an ontology is composed of a set of vocabularies used to explicitly and
+consensually describe a topic area and a set of explicit hypotheses on the meaning of
+terms. It is expressed as a set of objects and the relationships between them and is
+described in a formal language.\\ 
+\subsubsection{Ontology based method for topic identification of learning materials}
+The authors in \cite{a:ont} presented an ontological approach to automatically identify major topics covered in learning materials, also the subject and discipline to which those topics belong and relevance of the topic in the learning material as compared to other topics present in the same document are also discovered.
+\begin{description}
+\item[- Proposed approach:]
+	
+		The system stores the domain ontologies of various subjects, depicting the topics and terms relating to the subject and the relationships between them. For instance, Figure \ref{ont} shows an example of an ontology of the computer science subject.
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/ontology.PNG} 
+					\caption{Domain Ontology of the subject Computer Science \cite{a:ont}} \label{ont} 
+				\end{figure}
+The authors designed the domain ontology with multiple layers defined as follows:
+				\begin{itemize}
+					\item[-] The top layer contains disciplines like Computer Science.  
+					\item[-] The second layer contains Subjects under that discipline. 
+					\item[-] The third layer contains the broad topics covered under that subject. \\
+				\end{itemize}
+					Topics again can contain sub-topics. These subtopics may be again represented by collection of various terms.
+Figure \ref{workfow} depicts the workflow for the topic extraction process. 
+                \begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/workflow.PNG} 
+					\caption{Workflow of the topic extraction process \cite{a:ont}} \label{workfow} 
+				\end{figure}
+After the user submits doc or html files, the Standford Parser \cite {standford} skimd these document for noun phrases, the stop words are deleted from those phrases which generates keyphrases that are ranked according to word frequency and displayed for user approval. These approved keyphrases are compared to the terms present in the domain ontology. If the domain ontology contains these keyphrases, then the OWL Parser retrieves the corresponding topics and subtopics are listed out and the relevance of document with respect to topic(s) /subtopic(s) 
+enclosed in the learning material is calculated as follows:  \\	
+ \[Relevance_{topic}(document)= \frac{number\ of\ its\ key\ terms\ identified\ under\ the\ topic/subtopic}{Total\ number\ of\ key\ terms\ identified\ in\ the\ entire\ document} \] 
+Document can be characterized using the topic with higher relevance. 
+\item[- Performance evaluation:]
+		
+		Documents consisting of 200 learning materials of different subjects were processed by the developed tool. The performance evaluation was done in two phases:
+\begin{itemize}
+\item [-] First phase: \\
+The tool generated topics/subtopics were compared to those listed by subject experts. The authors used the F-score metric to evaluate the results. It is defined as follows:
+\[F_{\beta} = \frac{(\beta^{2}+1) \cdot Precision \cdot Recall}{\beta^{2} \cdot Precision + Recall}\]
+$\beta$ = 1 given precision and recall equal weights. \\
+Precision and Recall are defined as follows:
+\[Precision = \frac{Number\ of\ topic(s)/subtopic(s)\ identified\ correctly\ by\ the\ system } { Total\ topic(s)/subtopic(s)\ generated\ by\ the\ system}\] 
+\[Recall = \frac{Number\ of\ topic(s)/subtopic(s)\ identified\ correctly\ by\ the\ system} {Number\ of\ topic(s)/subtopic(s)\ identified\ by\ the\ authors}\]
+\item [-] Second phase: \\
+In this phase, the topics/subtopics that were generated by the system but not listed out by the authors are shown to the authors for approval.
+\end{itemize}
+\end{description} 
+Strict and lenient evaluations were performed. In strict evaluation, while comparing the system generated output with the expert list of topics/subtopics, the partially matched topics/subtopics are considered not found, whereas in lenient evaluation, they considered as matched. The obtained results are:
+\begin{description}
+\item[- Strict evaluation:]  
+
+\begin{itemize}
+\item [{\large $\cdot$}] Precision: 0.5057541
+\item [{\large $\cdot$}] Recall: 0.8015656
+\item [{\large $\cdot$}] Fscore: 0.63
+\end{itemize}
+\item[- Lenient evaluation:] 
+
+\begin{itemize}
+\item [{\large $\cdot$}] Precision: 0.6273393
+\item [{\large $\cdot$}] Recall: 0.9609625
+\item [{\large $\cdot$}] Fscore: 0.76
+\end{itemize}
+The authors have agreed on 82.3\% of the generated system topics/subtopics.
+\end{description}
+
+\subsubsection{A Wikipedia ontology based approach for automatic topic identification}
+The authors in \cite{a:ont2} extracted the background knowledge from Wikipedia, and convert it into a structured Wikipedia Hierarchical Ontology (WHO) and presented an approach to automatically identify the documents' topics using this ontology.\\
+Wikipedia categories were used to represent the WHO concepts, then the representative articles were gathered and organized for each concept so that they can be used to identify the relevant terms for that concept. After that the articles were cleaned by removing all kinds of formatting, the stop words were removed and the words were stemmed. After the preprocessing of the articles, a weight is assigned for each term
+based on its importance to the concept according to the following equation:
+\begin{equation}
+TF-ICF = TF * \log(ICF)
+\end{equation}
+where TF stands for the Term Frequency, it is the number of occurrences of a term in a concept divided by the total number of terms in that concept, and ICF is the total number of concepts divided by the number of concepts that contains this term.  After the document-term matrix D is generated, the concept-term matrix C of the specific subset of concepts that we are interested in is extracted from WHO and matrix $C^{*}$ is formed.\\
+The document-concept similarity matrix S is calculated as follows:\\
+\begin{equation}
+S = DC^{*T}
+\end{equation}
+\subsection{Machine learning based approaches}
+In this section, we will give an overview of the Label Propagation Algorithm, that was used as a clustering algorithm in our approach and then present an example of a machine learning based approach.
+	
+     \subsubsection{Kmeans based Algorithm}
+	The authors in \cite{a:kmeans} applied the Kmeans clustering algorithm to deal with the problem of topic detection. In their approach, they used the Vector Space Model for topic representation, K-means algorithm for text clustering and the Topic Detection and Tracking (TDT) method for performance evaluation. Figure \ref{proto} depicts the architecture of the topic detection prototype.
+	\begin{figure}[h]
+	  \centering
+	  \includegraphics[scale=0.7]{graphics/proto.png} 
+	  \caption{Architecture for Topic Detection Prototype System}
+	  \label{proto}
+	\end{figure}
+In the remainder of this section, we will explain this diagram  by going through each component.
+ \begin{enumerate}
+	\item \textbf{Topics Representation Model:\\}
+	 The topic model is a statistical language model that reveals a hidden thematic structure of the text collection and finds a highly compressed representation of each document by a set of its topics. It is based on the idea that documents are mixtures of topics, where a topic is a probability distribution over words \cite{a:Huang2008} \cite{a:b} \cite{a:Daud2010}.\\ 
+	Several topic modeling techniques were introduced in the literature such as Latent Semantic Analysis (LSA), Latent Dirichlet Allocation (LDA) and the Vector Space Model (VSM), which was applied in this prototype.\\
+	The Vector Space Model was introduced in 1971 by Gerard Salton \cite{a:vsm}. In this model each document in a collection is represented as a vector in a vector space, the distance between the vectors is calculated and the vectors that are close to each other are semantically similar. 
+	To express a document text as a vector, the words are first extracted and the stop words are eliminated then the TF-IDF metric is calculated for each word in the document. \\
+	If we suppose the training set contains n terms after removing the words, then each document d in the training set is expressed as an n-dimensional feature vector V(d).
+	\begin{equation}
+	V(d)=\left(t_{1},w_{1}(d);t_{2},w_{2}(d);\cdots t_{n},w_{n}(d)\right)
+	\end{equation}
+	Where $t_{i}$(i=1,2,⋯,n) is term i, and $w_{i}$(d)(i=1,2,⋯,n) is the weight of the text d, calculated using the cosine normalized version of the TF-IDF algorithm.
+	\begin{equation}
+		{\cal W}_{i}(d)={-tf_{i}(d)\times\log({q}/q_{i})\over \sqrt{\sum\limits_{i}(tf_{i}(d)\times\log(q/q_{i}))^{2}}}
+	\end{equation}
+ 
+A feature selection algorithm called Information gain was then applied to select an informative subset of text terms.\\ Information gain (IG) measures the amount of information in bits about the class prediction by knowing the presence or the absence of a term in a document \cite{a:yangcomp}.\\
+  For the term t and topic c, information gain \cite{a:yangcomp} is defined as follows: \\
+ \begin{equation}
+IG(t)=-{\sum}_{i=1}^{m}P(c_{i})\log P(c_{i})+P(t){\sum}_{i=1}^{m}P(c_{i}\vert t)\log P(t)+P(\bar{t}){\sum}_{i=1}^{m}P(c_{i}\vert \bar{t})\log P(c_{i}\vert \bar{t})
+\end{equation}
+Where $P(c_{i})$ is the probability that the topic i appears in the corpus, P(t) is the probability that a topic includes the term t, $P(c_{i}\vert t)$ is the conditional probability that the term t belongs to the topic i when the topic includes term t, $P(\bar{t})$ is the probability that a topic does not include the term t, $P(c_{i}\vert \bar{t})$ is the conditional probability that the term t belongs to the topic i when the topic does not include term t, and parameter m is the number of topics.
+		\item \textbf{KMeans Algorithm for Text Clustering:\\}
+		An overview of the Kmeans algorithm was given in \ref{kmeans}. In the case of text clustering the Kmeans algorithm proceeds as follows: 
+\begin{itemize}	
+\item [-] First $K$ data items from the set of data points are randomly chosen as initial centroids or mean of a topic. 
+\item [-] In the second step, each remaining data point is assigned to the cluster which has the closest centroid according to the cosine distance between the text vectors, which is defined as follows:
+		\begin{equation}
+			Dis(d_{i},d_{j})=1-Sim(d_{i},d_{j})
+		\end{equation}
+			
+	Where $d_i$ is text feature vector i, $d_j$ is text feature vector j and Sim($d_{i}$,$d_{j}$) is the cosine similar function between the document i and document j and is defined according to VSM as follows:
+		\begin{equation}
+ 			Sim(d_{i},d_{j})={\sum\limits_{k=1}^{n}{\cal W}_{ik}\times {\cal W}_{jk}\over\sqrt{\sum\limits_{k=1}^{n}{\cal W}_{ik}^{2}}\times\sqrt{\sum\limits_{k=1}^{n}{\cal W}_{jk}^{2}}}
+		\end{equation}
+where n is the dimension of feature vectors and ${\cal W}_{ik}$ is the weight of the feature k in document i calculated according to the TF-IDF algorithm.  The smaller the cosine distance between the two texts is, the more similar they are.	
+\item [-] Then, each cluster centroid is moved to the mean of the points assigned to it.
+This step is repeated until all data points are assigned to one of the $K$ clusters.
+\end{itemize}
+		\item \textbf{TDT Evaluation:\\}
+		If a topic could not be detected by the system, the resulting error is called "missed detection error", but if a system detects a wrong topic, the error is called "false alarm"\cite{a:tdtmetric}. The official evaluation measure of TDT is based on a cost function, which is a weighted combination of miss and false alarm rates \cite{a:tdtmetric}:
+	\begin{equation}
+C_{Det} = C_{Miss}\cdot P_{Miss}\cdot P_{target} + C_{FA}\cdot P_{FA}\cdot P_{non-target} 
+	\end{equation}
+$P_{target}$ is the prior probability that the topic is correctly detected ($P_{non-target}$ = 1 - $P_{target}$). $C_{Miss}$ and $C_{FA}$ are user defined  values that reflect the cost associated with miss and false alarm errors respectively and $P_{Miss}$ and $P_{FA}$ are the probabilities of a Miss and a False Alarm.
+The cost parameters used in the evaluation are:  $P_{target}$= 0.02, $C_{Miss}$ = 1.0, $C_{FA}$=0.1.
+The $C_{Det}$ value is normalized as follows:
+	\begin{equation}
+			(C_{Det})_{Norm} = C_{Det}/\min(C_{Miss}\cdot P_{target}, C_{FA}\cdot P_{non-target})
+	\end{equation}	
+The authors defined the $S{\_}Tracking{\_}P$ metric to test topic tracking overall performance. This metric is calculated as follows:
+			\begin{equation}
+	S{\_}Tracking{\_}P={\sum\limits_{i=1}^{m}((C_{Det})_{Norm})_{i} \over m}
+			\end{equation}
+	where m is the number of topics, and $((C_{Det})_{Norm})_{i}$ is TDT evaluation scores in topic i.
+	\end{enumerate}  	  
+	  
+	  
+\subsection{Graph based approaches}
+A graph approach for topic identification called LIGA and two extensions that enhance its performance were introduced in \cite{a:arabic}. The tests were done on arabic datasets. 
+The authors of \cite{a:arabic} applied the LIGA approach, which was first introduced in \cite{liga} for language identification, to identify the topics from the documents.
+
+Figure \ref{liga} shows the different steps of the LIGA approach.
+
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/LIGA.PNG} 
+					\caption{LIGA Approach workflow} \label{liga} 
+				\end{figure} 
+				First the training documents are preprocessed by eliminating the foreign words and the stop words and stemming the rest of words. Then the LIGA approach is applied. This approach can be divided into two steps: model construction and document classification.
+				\begin{itemize}
+				\item [-] Model Construction:\\
+				For each training document a graph, which corresponds to one topic called "topic graph" will be constructed. In this graph, each node contains a word and its number of occurrences in the training document, and each edge represents the link between two consecutive words in the training documents, and the weight of the edge represents the number of occurrences of these consecutive words. \\
+				Let's take the example of the following sentence: " \textit{A sad movie is a movie that makes the viewer feel sad and cry} ". \\
+				The corresponding topic graph is shown in Figure \ref{topic}.
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/topicGr.PNG} 
+					\caption{Topic graph example} \label{topic} 
+				\end{figure} 
+				After prepocessing the sentence, the topic graph would be: 
+				\item [-] Document Classification:\\
+				The unlabeled texts are presented as a path of words, and the entire paths are matched onto the graphs and the similarity between them is computed using the Path Matching (PM) score. The PM score assigns an integer to each topic. All PM scores of all topics are initially initialized to 0.\\
+				To compute the PM score, the path is traversed node by node. If a path node exists in a topic graph $G_{i}$ , then its weight is added to the PM score and if a path edge exists in the topic graph $G_{i}$ then its weight is also added to the PM score. The text topic corresponds to the topic graph having the highest PM score. \\	
+				Let's take the example of the following sentence: " \textit{Titanic is one of the best sad movies ever made}." This sentence corresponds to the path of words presented in \ref{path}: \\
+				\begin{figure}[h!]
+					\centering
+					\includegraphics[scale=0.7]{graphics/path.PNG} 
+					\caption{Word Path example} \label{path}
+				\end{figure} 
+					The words "sad", "movie" and "make" existed in the topic graph shown in \ref{topic} also the edge (sad,movie) existed in this topic graph. Thus $PM = weight(sad) + weight(movie)+ weight(make)+ weight((sad,movie)) = 5 $  			
+				\end{itemize}
+				
+ 
+Another graph-based approache was introduced in \cite{a:wiki} which applies the Page-Rank algorithm on Wikipedia derived graph to decide the importance of a vertex within a graph. 
+\section{Concept Detection in Image Datasets}
+	A search engine that allows users to pose natural language queries, interpretes them and retrieves the corresponding images called GOOSE was presented in \cite{a:inter}. The user query is semantically interpreted, concepts are detected from the images and learned by matching these detected concept against the user query which he can refine. The user can also re-rank the results. Figure \ref{sys1} gives an overview of the system components which will be further explained.
+\begin{itemize}
+	\item Semantic Query Interpretation: \\
+		The user query is first lexically analysed using the Stanford Typed Dependency parser \cite{a:parser} which transforms it into a direct graph where nodes are the words and the labeled edges depict the grammatical relations between the words. Let's for example take the sentence: "\textit{Find a brown animal in front of a red Mercedes}", the resulting  directed graph from depicted in Figure \ref{lexical}, where the grammatical relations: dobj, amod, det stand respectively for direct object, adjectival modifier and determiner.
+
+\begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/standfordG.png} 
+	  \caption{Lexical graph}
+	  \label{lexical}
+\end{figure}
+
+	  	This lexical graph is then semantically interpreted by applying a set of rules to transform the lexical graph elements into objects, attributes,  actions, scenes and relations, according to the semantic meta-model depicted in \ref{model} which the authors defined.
+This semantic Meta-model distinguishes objects that might bear attributes, take part in actions, occur in a scene and have relations with other objects.
+\begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/SMM.png} 
+	  \caption{Semantic Meta-model}
+	  \label{model}
+\end{figure}
+After applying the semantic interpretation on the sentence: "\textit{Find a brown animal in front of a red Mercedes}", we obtain the graph shown in Figure \ref{sem}, where the cardinality 1 is derived from the determiner "the", which is in a singular form. The attribute "color" is derived from the adjectival modifier.  
+	\begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/attrG.png} 
+	  \caption{Interpreted Graph}
+	  \label{sem}
+\end{figure}
+	  This semantic graph is matched against the detected image concepts. If there is no exact match, the semantic graph is expanded using ConceptNet \cite{a:concept}, a large semantic graph representing common human knowledge and the way it is expressed in natural language. The words in ConceptNet are related through predicates such as: "IsA" and "Causes". These relations were selected to expand the semantic graph where the unknown concepts are matched against concepts from  ConceptNet, if a match is found, the matching concepts and their corresponding 'IsA' and 'Causes' relations are imported to the semantic graph. Otherwise, the expansion cycle goes through a second iteration. The expanded semantic graph of the user query is shown in Figure \ref{exp} where the green nodes are the concepts that were recognized before the expansion, the orange nodes are the concept nodes corresponding to expansions with ConceptNet and red nodes are the still unknown concepts after the expansion. An example of the colored semantic graph  for the query ‘Find a brown animal in front of a red mercedes’ is shown in Figure \ref{exp}. This graph corresponds to the structured query that the user can further refine.
+	\begin{figure}[!hb]
+	  	\centering
+	  	\includegraphics[scale=0.6]{graphics/expansion.png} 
+	  	\caption{Expanded Semantic Graph of the query}
+	  	\label{exp}
+	\end{figure}
+	  	
+	 \item Concept Learning and Concept Detection: \\ 
+	  	The system  automatically recognizes and localizes concepts in video using the R-CNN method, which stands for Region proposals with Convolutional Neural Networks, presented in \cite{a:rcnn}. \\ This method consists of generating region proposals, extracting a feature vector from each region and classify each region using SVM. In the following, we will go through each of those steps: \\
+	 - Region Proposals generation: \\
+	 around 2000 bottom-upt category-independent region proposals were extracted using the selective search method. 
+\cite{a:J. Uijlings, K. van de Sande, T. Gevers, and A. Smeulders. Selective
+search for object recognition.IJCV, 2013.}\\
+	 - Features extraction:
+	 a 4096-dimensional feature vector from each region proposal using a Convolutional Neural Network.
+	 CNN  are ..\\
+	 - Regions classification:
+	 SVM ..
+	  	
+	  	 
+	 
+	
+\end{itemize}
+Finally the semantic graph is matched against the concepts that can be detected using the R-CNN algorithm. If a match exists, then the corresponding nodes in the graph are colored in green. Otherwise, the semantic graph is expanded using ConceptNet, a large knowledge base constructed by combining multiple web sources such  as DBpedia, Wiktionary and WordNet.\\
+The authors of \cite{a:online} developed an algorithm for learning multiple consecutive tasks or Multi-Task Learning algorithm for video concept detection.\\ This algorithm exentded the Efficient Lifelong Learning (ELLA) Algorithm described in \cite{a:ella}. ELLA learns and maintains a shared basis for all task models. For each new task, the algorithm transfers knowledge through the shared basis to learn the new model, and refines the basis with knowledge from the new task to maximize the performance. The proposed algorithm was referred to as Efficient Lifelong Learning Algorithm with Label Constraint, it extends the ELLA algorithm by solving the objective function of ELLA using quadratic programming, adding a new label-based constraint that incorporates statistical information of pairwise correlations between concepts and instantiating ELLA with two base classifiers linear Support Vector Machines(SVM) and Logistic regression (LR). 
+\chapter{Contribution}
+After going through the background and the state of the art, in this section we will present our novel graph-based approach to detect the concept out of highly-linked large datasets.
+In our model, the text datasets are first prepocessed then the training datasets are fed to our learning algorithm and finally the model is tested on new unlabled texts. In the remainder of this section, we will go through each of those steps.
+
+\section{Preprocessing}
+This step consists of preparing the datasets for further analysis. The words in the datasets are first extracted , stop words are removed, the rest of words are stemmed and lemmatised. Stemming is the process of replacing a word by its root independetly of the context of the word, for example, the words "connection", "connected" and "connectivity" will all be replaced by "connect" \cite{a:stem}. Lemmatisation consists also of determining the base form of a word called lemma depending on its context. For instance the lemma of "better" is "good" which won't be determined using the stemming technique \cite{a:lemma}.
+Both stemming and lemmatisation are word normalization techniques that will help us determine the occurence of the word and all its derivatives in the dataset.
+Let's take the following sentence: \\
+	It is no secret that fans of Chinese food often find it addictive. S1\\
+After eliminating the stop words, stemming and lemmatizing the sentence, we obtain the following list of words: \\
+secret, fan, chines, food, find, addict
+
+
+
+\section{Approach}
+\subsection{Model construction and learning}
+A training graph having as vertices the set of preprocessed words in the dataset and three kinds of edges: "follow", "child" and "implication" is construced.
+For each sentence, the follow edges are built between consecutive words in each sentence. The child edges depict the grammatical relationships between the words. Each sentence is then presented to a person that enters the list of concepts he understands from it. An implication edge between each word of the sentence and each understood concept is added to the graph.
+Once the training graph is constructed, the clustering algorithm "Label Propagation" is applied on it. Each obtained cluster is colored with a different color. \\
+Let's assume a user understands the concepts:  "food, fans" from sentence S1:\\
+After lemmatizing and stemming those words, we obtain the following list of implications: fan, food. \\
+As a result, we obtain the following training graph:
+
+
+
+\begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/sentence.png} 
+	  \caption{Training graph}
+	  \label{fig:trainingGraph}
+\end{figure}
+The implication vertices are colored in red.	  
+
+\subsection{Model testing}
+After preprocessing the testing texts, a graph containing the "follow" and "child" edges is constructed in the same way. Then this graph is matched to the training graph, if there are some common nodes in both graphs, then the "implication" edge between the node and its corresponding concept is copied from the training graph to the tesing graph.
+\begin{figure}[!hb]
+	  \centering
+	  \includegraphics[scale=0.6]{graphics/onlytestsentence.png} 
+	  \caption{Testing graph}
+	  \label{fig:trainingGraph}
+\end{figure}
+The induced implication vertices are colored in red.
+
+
+
+
+
+%\input{contribution.tex}
+
+%\chapter{Results}
+%Second most important chapter. Verifies the theses defined in the previous chapter. %Tries to evaluate and analyze the contribution in qualitative or quantitative terms. %Ends with a discussion. Approximately 20 to 30 pages. Can be split into multiple %chapters.
+
+%\chapter{Conclusion}
+
+%One page. What have we learned in/through this thesis?
+
+%Expected thesis length: 90 pages (+-5)
+
+
+% Back Matter (use input to add appendices, if really needed)
+
+\input{bib.tex}
+
+\end{document}

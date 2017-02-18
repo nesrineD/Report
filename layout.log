@@ -1,0 +1,220 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=latex 2016.9.3)  25 NOV 2016 12:23
+entering extended mode
+**./layout.tex
+(layout.tex
+LaTeX2e <2016/03/31>
+Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\book.cls"
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\bk12.clo"
+File: bk12.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\times.sty"
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\mathptmx.sty"
+Package: mathptmx 2005/04/12 PSNFSS-v9.2a Times w/ Math, improved (SPQR, WaS) 
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ztmcm/m/n on input line 28.
+LaTeX Font Info:    Redeclaring symbol font `letters' on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/ztmcm/m/it on input line 29.
+LaTeX Font Info:    Redeclaring symbol font `symbols' on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/ztmcm/m/n on input line 30.
+LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/ztmcm/m/n on input line 31.
+\symbold=\mathgroup4
+\symitalic=\mathgroup5
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/ptm/bx/n on input line 34.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/ptm/m/it on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
+LaTeX Info: Redefining \hbar on input line 50.
+)
+(C:\Users\Asus\AppData\Roaming\MiKTeX\2.9\tex\latex\booktabs\booktabs.sty
+Package: booktabs 2005/04/14 v1.61803 publication quality tables
+\heavyrulewidth=\dimen103
+\lightrulewidth=\dimen104
+\cmidrulewidth=\dimen105
+\belowrulesep=\dimen106
+\belowbottomsep=\dimen107
+\aboverulesep=\dimen108
+\abovetopsep=\dimen109
+\cmidrulesep=\dimen110
+\cmidrulekern=\dimen111
+\defaultaddspace=\dimen112
+\@cmidla=\count88
+\@cmidlb=\count89
+\@aboverulesep=\dimen113
+\@belowrulesep=\dimen114
+\@thisruleclass=\count90
+\@lastruleclass=\count91
+\@thisrulewidth=\dimen115
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2016/01/02 v1.10 sample graphics configuration
+)
+Package graphics Info: Driver file: dvips.def on input line 96.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\dvips.def"
+File: dvips.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
+))
+\Gin@req@height=\dimen116
+\Gin@req@width=\dimen117
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\titlesec\titlesec.sty"
+Package: titlesec 2016/03/21 v2.10.2 Sectioning titles
+\ttl@box=\box26
+\beforetitleunit=\skip43
+\aftertitleunit=\skip44
+\ttl@plus=\dimen118
+\ttl@minus=\dimen119
+\ttl@toksa=\toks15
+\titlewidth=\dimen120
+\titlewidthlast=\dimen121
+\titlewidthfirst=\dimen122
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks16
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.sty"
+Package: babel 2016/04/23 3.9r The Babel package
+
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\Asus\AppData\Roaming\MiKTeX\2.9\tex\latex\arabi\bblopts.cfg
+File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
+ babel
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.def"
+File: babel.def 2016/04/23 3.9r Babel common definitions
+\babel@savecnt=\count92
+\U@D=\dimen123
+)
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
+Language: english 2012/08/20 v3.3p English support from the babel system
+))
+
+Package Babel Warning: The package option `english' should not be used
+(Babel)                with a more specific one (like `american') on input line
+ 11.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
+Package: color 2016/05/09 v1.1c Standard LaTeX Color (DPC)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: dvips.def on input line 144.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\dvipsnam.def"
+File: dvipsnam.def 2015/12/30 v3.0k Driver-dependent file (DPC,SPQR)
+))
+(new_narrow_margins_x2mm.tex)
+("C:\Program Files\MiKTeX 2.9\tex\latex\nomencl\nomencl.sty"
+Package: nomencl 2005/09/22 v4.2 Nomenclature package (LN)
+\nomlabelwidth=\dimen124
+\nom@tempdim=\dimen125
+\nomitemsep=\skip45
+)
+\@nomenclaturefile=\write3
+\openout3 = `layout.nlo'.
+
+
+Writing nomenclature file layout.nlo
+("C:\Program Files\MiKTeX 2.9\tex\latex\fancyhdr\fancyhdr.sty"
+\fancy@headwidth=\skip46
+\f@ncyO@elh=\skip47
+\f@ncyO@erh=\skip48
+\f@ncyO@olh=\skip49
+\f@ncyO@orh=\skip50
+\f@ncyO@elf=\skip51
+\f@ncyO@erf=\skip52
+\f@ncyO@olf=\skip53
+\f@ncyO@orf=\skip54
+)
+\c@definition=\count93
+)
+! Emergency stop.
+<*> ./layout.tex
+                
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 2040 strings out of 493336
+ 25745 string characters out of 3139290
+ 80917 words of memory out of 3000000
+ 5570 multiletter control sequences out of 15000+200000
+ 3938 words of font info for 15 fonts, out of 3000000 for 9000
+ 1142 hyphenation exceptions out of 8191
+ 25i,0n,43p,206b,36s stack positions out of 5000i,500n,10000p,200000b,50000s
+No pages of output.

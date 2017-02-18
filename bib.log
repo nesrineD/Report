@@ -1,0 +1,42 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2016.6.26)  23 JAN 2017 15:35
+entering extended mode
+**./bib.tex
+(bib.tex
+LaTeX2e <2016/03/31>
+Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
+! Undefined control sequence.
+l.2 \smallerBegin
+                 
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+\bibdata{all_publications}
+No file bib.bbl.
+! Undefined control sequence.
+l.7 \smallerEnd
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+)
+! Emergency stop.
+<*> ./bib.tex
+             
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 7 strings out of 493335
+ 71 string characters out of 3139263
+ 53211 words of memory out of 3000000
+ 3635 multiletter control sequences out of 15000+200000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 5i,0n,3p,44b,8s stack positions out of 5000i,500n,10000p,200000b,50000s
+!  ==> Fatal error occurred, no output PDF file produced!

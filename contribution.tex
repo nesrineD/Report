@@ -1,0 +1,746 @@
+\chapter{Self-Organizing Random Walk-Based CkDS Construction}
+
+Most important chapter of the thesis. Describes what the author adds to state of the art. Discusses intuition, motivation, describes and reasons about necessity of proposed elements. Defines theses based on reasonable assumptions. Discusses relevant aspects of contribution. Approximately 30 to 40 pages. Can be split into multiple chapters.
+
+This is an example text with figures, definitions and so on.
+
+\label{bickds}
+
+After a review of background information and state of the art in the previous chapters, this chapter introduces a novel approach for the construction of connected $k$-hop dominating sets (CkDS) in wireless sensor networks (WSNs). To cope with the resource restrictions of this network class, as reviewed in Section \ref{sechardware}, the biologically-inspired, self-organizing protocol employs methods and exhibits properties which are inherent in many biological systems. It is inspired by the general technique of random walks and, in particular, by the flight behavior of ovipositing Pieris rapae, which efficiently solves the coverage problem in nature by employing random walks. The proposed approach is the first protocol for the construction of connected dominating structures, including CDS and CkDS, to adopt random walks to wireless networks. In \cite{own092}, the central contribution of this chapter was published recently.
+
+
+
+The first section of this chapter presents an overview of the inspiration and the design considerations for the introduced CkDS construction method. Thereafter, Sections \ref{bickds_sec_outline}--\ref{sb2} provide a detailed description of the proposed protocol, before Section \ref{ourprotdisc} discusses its behavior.
+
+
+
+\section{Outline}\label{bickds_sec_outline}    \label{ourprot}\label{sec_o} \label{core}
+
+The proposed protocol consists of two intertwined behavior blocks: in the first, a dominating set is constructed, in the second, this set is connected to become a CkDS. Each of the blocks is further subdivided into two subblocks: exploration and construction.  
+
+Assuming a network without a dominating set, the first behavior block (Section \ref{sb1}) starts with the exploration subblock, in which exploration agents roam the network in order to find candidate segments for the addition to the dominating set. Their movement pattern is similar to the discussed movement pattern of P. rapae (Section \ref{secbpr}). If certain conditions are satisfied, a candidate segment is added to the dominating set by agents from the construction subblock. As a result of the parallel construction operations of this block, a dominating set is produced.
+
+
+
+While the agents in the first behavior block still explore and construct, the operations specified by the second behavior block (Section \ref{sb2}) are already executed. Agents from the exploration subblock perform random walks similar to their relatives in the previous block and in nature, but with restrictions which increase the probability to find a candidate path for the connection of two disconnected segments of the already existing dominating set. A rule which forces these agents to start only from dominating nodes is, for example, part of these restrictions. In the construction subblock, agents construct connections between dominating set segments that appear disconnected, selecting from the candidate paths found by exploration agents. To improve the quality of the solution, for instance, there are mechanisms that help to avoid the creation of redundant interconnections. As a result of these behavior blocks, a CkDS is produced.
+
+The description of the proposed protocol is organized as follows: All necessary definitions used later in the text are introduced in Section \ref{cds_ckds_def}. The local data structures and next-hop candidate ratings utilized by the protocol are specified in Sections \ref{slds} and \ref{slr}. Subsequently, in Sections \ref{sb1} and \ref{sb2}, the two behavior blocks representing the core of the protocol are described in detail.
+
+\section{Definitions}\label{cds_ckds_def}\label{sec_d}
+
+A connected WSN is modeled as graph, using the following definitions:
+
+\begin{definition}\label{defgpure}
+
+An \emph{undirected graph} $G = (V,E)$ consists of a set of vertices $V$ and $E$, a set of edges $(u,v)$, where $u,v \in V$ and $u\neq v$. $(u,v)$ and $(v,u)$ are considered the same edge. If $(u,v)\in E$, then also $(v,u)\in E$.
+
+\end{definition}
+
+\begin{definition}\label{defcon}
+
+A set of vertices $S\subseteq V$ in an undirected graph $G = (V,E)$ (according to Definition \ref{defgpure}) is \emph{connected}, if, between each pair of vertices $\{u,v\}$, with $u,v \in S$, there exists a path consisting only of vertices from $S$.
+
+\end{definition}
+
+The proposed protocol, similar to the related approaches, assumes bidirectional links, which are modeled as undirected edges constituting set $E$ in $G=(V,E)$. This assumption reflects the fact that usually unicasts need to be acknowledged at MAC level, which is only possible given bidirectional links. However, real links may be unidirectional, as implied, for example, by Figure \ref{bg_realtx} in Section \ref{seccom}. To cope with this, in the real-world, the network graph is simply stripped of unidirectional links (i.e.\ such links are ignored).
+
+
+\begin{definition}\label{defg}
+
+An \emph{undirected, connected graph} $G = (V,E)$ is an undirected graph according to Definition \ref{defgpure} whose set of vertices $V$ is connected under Definition \ref{defcon}.
+
+\end{definition}
+
+The following definitions assume an undirected, connected graph $G=(V,E)$ according to the above definition:
+
+\begin{definition}\label{defpath}
+
+A \emph{path} of length $l$ between $v$ and $u$ is a sequence of vertices $\langle v_0,v_1,v_2,\ldots,v_l \rangle$, such that $v=v_0$, $u=v_l$, $(v_{i-1},v_i) \in E$, and $i=1,2,\ldots,l$, with $v_0,v_1,v_2,\ldots,v_l \in V$.
+
+\end{definition}
+
+\begin{definition}\label{defadjacent}
+
+Two vertices $v, u\in V$ are \emph{adjacent}, if there exists an edge $(u,v)\in E$.
+
+\end{definition}
+
+There are two \emph{vertex states}: \emph{dominating} and \emph{non-dominating}. 
+
+\begin{definition}\label{defdomset}
+
+A \emph{dominating set} $D \subseteq V$ is the set of all vertices $v\in V$ whose state is dominating.
+
+\end{definition}
+
+A connected $k$-hop dominating set (CkDS) is defined as in Definition \defref{defckds}.
+
+ 
+\begin{definition}\label{defcenter}
+ 
+ A vertex $v_c$ is also called a \emph{center}, if $v_c \in$ dominating set $D$, and there exist three edges $(v_c, v_1)$, $(v_c, v_2)$, and $(v_c, v_3)$, with $v_1, v_2, v_3 \in D$ and $v_c\neq v_1\neq v_2\neq v_3$. 
+ 
+\end{definition}
+
+
+
+Different neighborhood sets are defined as follows: 
+
+\begin{definition}\label{defnall}
+
+$N_w(v)$ contains \emph{all} vertices in the $w$-hop neighborhood of vertex $v$. 
+
+\end{definition}
+
+\begin{definition}\label{defndom}
+
+$N_w^D(v)$ contains \emph{all dominating} vertices in the $w$-hop neighborhood of vertex $v$. 
+
+\end{definition}
+
+\begin{definition}\label{defnondom}
+
+$N_w^n(v)$ contains \emph{all non-dominating} vertices in the $w$-hop neighborhood of vertex $v$. 
+
+\end{definition}
+
+\begin{definition}\label{defncenter}
+
+$N_w^c(v)$ contains \emph{all} vertices called \emph{centers} in the $w$-hop neighborhood of vertex $v$. 
+
+\end{definition}
+
+
+
+\section{Local Data Structures}\label{slds}\label{sec_lds}
+
+Each node $v$ maintains a field $d\in \{n,D\}$, which contains the state of the node: non-dominating ($n$) or dominating ($D$). Additionally, each node administers the following tables:
+
+\begin{itemize}
+
+\item \emph{Neighborhood Table $nTab(v_n)$:} This table includes the $1$-hop neighborhood of a node. The information in this table is used for the probabilistic next-hop selection by the initial exploration and connection exploration agents (IEAs and CEAs), as described in Sections \ref{sec_inhs} and \ref{sec_oonh}. An entry is associated with the neighbor $v_n$ (identified by its address) and contains the following fields: 
+
+		\begin{itemize}
+
+			\item $s$ records the state of $v_n$, i.e.\ whether it is dominating or non-dominating. This information can be obtained from a received broadcast sent by a state-changing node.
+			
+			\item $rssi$ records the received signal strength indication (RSSI)\abbrev{RSSI}{Received Signal Strength Indication} of $v_n$, assuming that it has been normalized adequately to reflect the approx.\ distance to $v_n$. The method for acquiring RSSI values is platform dependent.
+			
+			\end{itemize}
+
+The addresses of $1$-hop neighbors can be, for example, obtained from an underlying WSN medium access control (MAC) protocol, such as \emph{S-MAC} \cite{ye02protocol} or \emph{SCP-MAC} \cite{ye06mac}, which is aware of the $1$-hop neighborhood, so that no additional overhead is incurred.  
+
+\item \emph{Interconnection Table $iTab(v_s)$:} In order to enable the interconnection of 
+dominating set segments in the second behavior block, when a connectivity exploration agent (CEA) $a_{CE}$ visits node $v$, $a_{CE}$ downloads its path and center information to $v$'s local interconnection table (see Section \ref{sec_pwfc}). When another CEA visits $v$, it can evaluate whether its interconnection table contains paths that lead to a dominating set segment which appears to be disconnected (see Section \ref{sec_oonh}). For each source node $v_s$, the entry has the following format:
+
+\begin{itemize}
+ \item $p$ records the path to dominating node $v_s$
+ 
+ \item $cns$ contains the centers that are reachable via the dominating node $v_s$
+
+\end{itemize}
+ 
+Note that $p.length$ and $p.source$ return the length and the source (i.e.\ first) node of the path (this also applies to the path fields of agents). Further, if an entry has not been updated within $t_{itu}$ time, it is deleted.
+		
+\item \emph{Next-Hop Utilization Table $nhuTab(v_{s}, v_{n})$:} The utilization of next hops by connection exploration agents (CEAs) is recorded in the next-hop utilization table (see Section \ref{sec_pwfc}). After a CEA, originating from node $v_s$, selects its next-hop, it records its selection to this table. Thereafter, the probabilities assigned to next hops are influenced by this selection for other CEAs also originating from $v_s$ (see Section \ref{sec_nhsd}). \todoh{explain somewhere whhy association with vs} For a source node $v_s$ and a next-hop neighbor $v_n$, the entries contain only one field: 
+
+\begin{itemize}
+
+\item $uf$, the utilization frequency, which is initially $0$.
+
+\end{itemize}
+
+\item \emph{Center Distance Table $cdTab(v_c)$:} This table maintains information on center nodes within $CIPA_{mh}$-hops (along dominating nodes) of a node. It serves two purposes: first, it facilitates the rating of the connectivity of a dominating node (see Section \ref{sec_cr}), second, it enables CEAs to recognize dominating set segments that appear to be disconnected (see Section \ref{sec_nhsd2}). The entries of the center distance table, associated with a center $v_c$, contain only one field
+
+\begin{itemize}
+
+	\item $d$, recording the distance to $v_c$.
+	
+\end{itemize}
+
+\end{itemize}
+
+
+Note that not all tables are needed on all nodes. The center distance table is only maintained on dominating nodes, for instance. Moreover, most of the tables serve several purposes and may be utilized in combination: for example, a CEA evaluates the neighborhood, the next-hop utilization, and the interconnection tables to select its next hop (see Section \ref{sec_oonh}).
+
+
+In order to refer to elements of these tables, this document employs several simple notations. Here are some examples for typical usage:
+
+\begin{itemize}
+
+		\item $v_a.nTab(v_b).rssi$ for the $rssi$ field associated with neighboring node $v_b$ in the neighborhood table of node $v_a$
+		
+		\item $v_a.iTab.v_s$: all source nodes in the interconnection table at node $v_a$
+		
+		\item $v_a.iTab.cns$: all $cns$ fields in the interconnection table at node $v_a$
+		
+\end{itemize}
+
+\section{Next-Hop Candidate Ratings}\label{slr}\label{sec_nhcr}
+
+In contrast to the existing CkDS approaches, reviewed in Section \ref{sotackds}, the proposed approach offers a seamless integration of next-hop candidate ratings, colluding with its probabilistic next-hop selection process. The ratings take into account the quality of a link (Section \ref{sec_lqr}) towards a potential next hop and its utilization properties (Section \ref{sec_ur}). Therefore, the proposed protocol achieves randomized connected coverage, while considering the quality and utilization of next-hop candidates. 
+
+\done{what about energy rating above}
+
+\subsection{Link Quality Rating} \label{sec_lqr}
+
+The link quality rating has the following objectives: First, links that are expected to lead to successful transmissions more often should be preferred over links that are expected to yield lower transmission success rates. Second, from the links which are expected to lead to high transmission success rates, the ones should be preferred that cross as much distance as possible, so that fewer hops are needed to cover a certain area of the network.
+
+
+In other words, the link rating aims at maximizing the additional amount of coverage of each link in a random walk, while, at the same time, it avoids links with low transmission success rates. Since a successful transmission implies a successful reception and vice versa, I will use the term \emph{reception success} to describe a successful transmission and reception of a frame or packet, as it is more common in the community.
+
+
+Before introducing the proposed link rating, related, preparatory work by other authors needs to be reviewed briefly: As described in \cite{woo03} and \cite{zhao03performance}, two correlations can be observed: First, there is a positive correlation between received signal strength and reception success rate. Naturally, at the same time, a negative correlation between received signal strength and distance can be found. Note that for the sake of brevity, I will frequently use the abbreviation RSSI, short for \emph{received signal strength indication}, to refer to received signal strength.
+
+The relationship between distance and reception success rate is depicted in Figure \ref{bickds_thresholds}, based on the data from \cite{woo03} for Berkeley Mica motes. In the figure, the rate of reception success is plotted as a function of distance. To obtain the data, the authors positioned a grid of nodes in an open tennis court at two feet (60.96 cm) distance in both dimensions. The nodes transmitted 200 packets at a rate of eight packets per second, with only one transmitter active at a given time and the remaining nodes receiving. It is evident from the figure ($a$ and $b$ are marked in the chart) that the distances can be divided into three categories:
+
+
+\begin{description}
+\item[0 to a] In this region, the probability that a frame/packet will be received successfully is very high. Thus this region should be preferred.
+
+\item[a to b] Within these limits, there is an acceptable probability that a packet will be received successfully.
+
+\item[b to $\infty$] In this area, the transmitted packet is likely not to be received. Therefore it should be avoided.
+
+\end{description}
+
+From the description above, it is evident that 
+
+\begin{description}
+
+\item[a] represents a distance threshold below which the reception success rates are excellent. Since there is a negative correlation between distance and signal strength, the RSSI value corresponding to this distance can be regarded as a threshold, labeled $r_{pr}$, above which the reception success can be expected to be excellent and therefore links with RSSI values greater $r_{pr}$ should be \emph{preferred}.
+
+\item[b] identifies a distance threshold below which the reception success rates are acceptable. As there is a negative correlation between distance and signal strength, the RSSI value corresponding to this distance can be regarded as a threshold, labeled $r_{ac}$, above which the reception success can be expected to be acceptable and therefore links with RSSI values greater $r_{ac}$ should be \emph{accepted}.
+
+\end{description}
+
+
+
+The proposed link quality rating takes into account these considerations by categorizing links into three rating classes according to their RSSI values $r$ and the thresholds $r_{ac}$ and $r_{pr}$. Depending on this categorization, the links are rated in a different manner. More concretely, I propose the following \emph{link quality rating}:
+
+\begin{equation}\label{qr}
+	qr(v_n)= \left\{ \begin{array}{rll}
+	 	\max((\frac{r_{pr}}{r})^\gamma,\alpha) & \; \mbox{if} \; & r \geq r_{pr}\\
+	 	\beta & \; \mbox{if} \; & r_{pr} > r \geq r_{ac}  \\
+	 	0 & \; \mbox{else}
+	 	\end{array}\right.
+\end{equation}
+
+\insertFigure{graphics/bickds_thresholds}{bickds_thresholds}{Reception success rate as a function of distance. Data source: \cite{woo03} }{}
+
+using the RSSI value $r=nTab(v_n).rssi$ of the link to node $v_n$, $\gamma >0$ to adjust the steepness of the function, and $r_{pr}$/$r_{ac}$ as RSSI thresholds for links which are preferred/accepted, as they can be expected to exhibit high/acceptable reception success rates.  The influence of the different parameters ($\alpha$, $\gamma$, $r_{pr}$, $r_{ac}$, and $\beta$) on the rating is illustrated in Figure \ref{bickds_qrplot}.
+
+As long as $r \geq r_{pr}$, the underlying idea is to favor links with lower RSSI, as it is likely that they bridge longer distances. The minimum value produced by the rating, as long as $r \geq r_{pr}$, is $\alpha \in (\beta,1]$, to always assess them better than more unreliable links with $r < r_{pr}$. $r_{pr}$ is represented by the dotted line, marked with $a$, in Figure \ref{bickds_thresholds}. 
+
+$r_{ac}$ represents a threshold above which lower, however, still to a certain extent acceptable reception success rates can be expected, so that a lower constant value is assigned ($\beta \in [0,1)$). In Figure \ref{bickds_thresholds}, $r_{ac}$ is depicted using the dotted line marked with $b$. 
+
+All non-acceptable links, for which it can be expected that they yield too low reception success rates to be useful, are assigned $0$ as rating.
+
+
+
+
+When looking at the observations from \cite{woo03} and \cite{zhao03performance}, given the nature of the communication channel and the relative weakness of the correlation, it is clear that the above rating can only approximate the actual link properties. 
+
+\subsection{Utilization Rating}\label{sec_ur}
+
+
+In the second behavior block, described in Section \ref{sb2}, the dominating set segments created by the first behavior block are interconnected. To realize this, exploration agents are dispatched from dominating nodes in order to search for other dominating segments that appear to be disjoint, so that these can be connected subsequently. An example of a state prior to interconnection is depicted in Figure \ref{bickds_p2_stage1} (a).
+
+As long as an exploration agent from the second behavior block does not find a trace towards a dominating set segment that it considers disconnected from the dominated set segment it originated from, it uses a random walk to move through the network. However, to reduce the number of explorations needed in the second behavior block, the agent's strategy aims at spreading the random walks more evenly over the network topology, by reducing the probability of repeating previous choices (see Section \ref{sec_nhsd}). 
+
+Consider the situation depicted in Figure \ref{bickds_p2_stage1} (b): the exploration agent originating from node $13$ has now arrived at node $14$. Assume that the candidates for next-hop selection are nodes $15$, $16$, $17$, and $18$. If, for example, node $17$ has been used as next hop three times and all of the other nodes only once, the underlying idea of the utilization rating is to increase the probability of choosing one of the less-often selected next-hop candidates. 
+
+In order to realize the above idea, the \emph{utilization rating} is defined as follows:
+
+	\begin{equation}
+	   ur(v_s,v_n)=1 - \frac{v.nhuTab(v_s, v_n).uf}{\sum_{v_i \in S_{c}}{v.nhuTab(v_s, v_i).uf}}
+	\label{ur}
+	\end{equation}
+	
+with 
+
+\begin{itemize}
+
+	\item $v$, the current node visited by the agent,
+	
+	\item $v_n$, the rated next-hop candidate,
+	
+	\item $v_s$, the node at which the agent was generated,
+	
+	\item $S_c$ as defined in Equation \ref{sc} (see Section \ref{sec_inhs}). It represents the neighborhood of a node from which, if possible, nodes that would lead an agent towards previously visited regions were removed.
+
+\end{itemize}
+
+The probability to select $v_n$ consequently declines with higher previous utilization. $v_s$ has to be included in the rating, in order to take into account the fact that exploration agents in behavior block II may originate from any dominating node. Not doing so would lead to highly non-linear walks, since the trajectory of an agent would be influenced by the utilization traces ($v.nhuTab$) of agents that approached the current node from a different direction.
+
+\subsubsection{Integration with Link Quality Rating}\label{sec_iwnhqr}\label{sec_iwnh}\label{sec_iwlq}
+
+To be applicable, the utilization rating is integrated with the link quality rating to an \emph{extended rating} for a link from $v$ to $v_n$, considered by an agent generated at $v_s$:
+
+\begin{equation} \label{er}
+	er(v_s,v_n) = qr(v_n)^\omega \cdot ur(v_s,v_n)^\varpi
+\end{equation}
+
+with $\omega$ and $\varpi$ used for tuning the influence of $qr$ and $ur$. 
+
+
+\section{Behavior Block I: Initial Dominating Set Construction}\label{sb1}\label{bbii}
+
+
+The first behavior block is divided into two behavior subblocks: exploration and construction (Sections \ref{p1ex} and \ref{p1con}). It needs to be emphasized that as behavior blocks I and II work in parallel, also their subblocks, exploration and construction, are executed in parallel.
+
+In the first subblock, in order to enable the protocol to select nodes for the dominating set, first, a swarm of agents explores the network area. Exploration agents start in a probabilistic manner from different nodes (Section \ref{sec_idt}). The swarm of these agents determines paths, from which it selects some to be added to the dominating set. For this exploration method, the proposed approach draws inspiration from the flight behavior of ovipositing P. rapae. It imitates its random walks by employing a probabilistic next-hop selection function (Section \ref{sec_inhs}). Further, a tendency towards linearity similar to P. rapae's is achieved by integrating a multi-hop path straightening method (Section \ref{sec_inhs}). 
+
+To adapt the imitated behavior to the properties of the artificial system, i.e.\ the WSN, further rules to the proposed behavior are needed: To use long-range links with high reception success rates, a link quality rating (Section \ref{sec_lqr}) is included in the next-hop selection process. Further, rules that are only necessary in the artificial system determine under which conditions and how nodes are added to the dominating set (Section \ref{sec_taig}). Finally, in order to enable the second behavior block to connect dominating set segments that were added by this block and are considered disjoint, the description specifies how the necessary information is provided (Section \ref{sec_poci}).
+
+
+
+\subsection{Exploration}\label{p1ex}
+
+Within this subblock, agents explore the network using random walks, thereby defining paths, which serve as candidates for the addition to the dominating set. There are two advantages to considering entire paths as candidates instead of single nodes like in the approaches from state of the art \cite{sausenSLP07backbones, theoleyreV04structure, yangLT08algorithm, yangWC05clustering}:
+
+\begin{itemize}
+
+\item When looking at a CkDS, such as the one depicted in Figure \ref{bg_motivation1}, one can intuitively interpret the structure as an accumulation of numerous intersecting paths. The proposed protocol exploits this observation by deciding whether to add entire paths instead of single nodes to the dominating set. Since each path typically consists of multiple nodes, this design choice aims to reduce the number of marking decisions and thereby the overall cost of the process. It is also a point at which the devised protocol closely resembles its natural archetype, since each path can be regarded as a random walk by a P. rapae female.
+
+\item Naturally, there must be rules to select which candidate nodes to add to the dominating set. If a protocol operates on a per-node basis, the vicinity of a node considered as candidate within a certain number of hops, reflecting the dominating distance $k$, needs to be known in order to provide enough information for these rules. In contrast, when paths are utilized as candidates, the length of the paths already implies distance information, so that it does not have to be obtained explicitly. In other words, the length of a path can be made use of to decide, whether to add a set of candidate nodes constituting the path to the dominating set---\emph{without} knowing their multi-hop neighborhood. Thus only a minimum amount of information is required for this decision, since paths are established through a random walk consisting of unicasts, which translates to low costs in terms of communication and thus less energy consumed. Moreover, it makes the cost of candidate selection virtually independent of the node degree and the desired dominating distance, which is also confirmed by the simulation results in Chapter \ref{chapres}.
+
+\end{itemize}
+
+
+To produce the swarm, an \emph{initial exploration agent} (IEA) $a_{IE}$ is generated at each node $v$ immediately after the protocol starts its operation. The role of each of the agents is to create information by modifying its own state and the state of visited nodes, as well as, to evaluate information present at nodes to draw conclusions from it. By this, agents do not communicate with each other directly but using stigmergy. 
+
+\abbrev{IEA}{Initial Exploration Agent}
+
+\subsubsection{IEA Departure Time}\label{sec_idt}
+
+In order to enable an evaluation of useful information, the agents' activities need to be dispersed over time. Else, if agents roamed the network exactly at the same time, there would not be enough information existing already that could be made use of. Therefore, agents determine their departure time from the node of their creation, $v$, using the function
+
+
+
+	\begin{equation}\label{tiea}
+			t_{IEA}= \left\{ \begin{array}{rll}
+			t_{c} + random() \cdot t_{IEAmd} & \; \mbox{if} \; & random() \leq p_{dIEA}\\
+			\infty 	& \; \mbox{else}
+	 			\end{array}\right.
+		\end{equation}
+
+
+with
+
+\begin{itemize}
+
+\item $t_{c}$: the current time
+
+\item $random()\in [0,1]$: a function generating random numbers
+
+\item $p_{dIEA}$: the departure probability
+
+\item $t_{IEAmd}>0$: a maximum delay
+
+\end{itemize}
+
+$t_{IEA}=\infty$ corresponds to the death of the agent. According to the above function, the agent departs at a random time between now and $t_{IEAmd}$ with probability $p_{dIEA}$. The probability $p_{dIEA}$ was introduced, since it became evident, after experiments, that it was sufficient to start IEAs from only a subset of all nodes.
+
+An IEA $a_{IE}$ has the fields $\langle p, ts \rangle$:
+
+\begin{itemize}
+
+\item $p$: recording the path traveled, so that every visited node is added to $p$.
+
+\item $ts$: denotes the tabu set, which consists of the IDs of nodes in the $1$-hop neighborhood of the agent's previous hops, as well as, the previous hops themselves, added every time before leaving a node. $ts_{mnn}$ and $ts_{mph}$ specify the maximum size of $ts$ in number of nodes, $ts.nn$, and previous hops, $ts.ph$. Thus, for example, with $ts_{mph}=2$, $a_{IE}.ts$ of IEA $a_{IE}$ that visited the sequence of nodes $v_a, v_b, v_c, v_d$, after leaving $v_d$, will contain $N_1(v_c) \cup N_1(v_d) \cup v_c \cup v_d$, assuming a sufficiently large $ts_{mnn}\geq |N_1(v_c) \cup N_1(v_d) \cup v_c \cup v_d|$. If $ts.nn > ts_{mnn}$ or  $ts.ph > ts_{mph}$, nodes are deleted from $ns$ in the order of their insertion. 
+\end{itemize}
+
+
+\subsubsection{IEA Departure Procedure and Structure}\label{placedeparture}\label{sec_idp}
+
+Before leaving a node $v$, an IEA $a_{IE}$ checks, if any other IEA has left $v$ within the last $t_{mw}$ time, i.e.\ the maximum expected walk time. If the condition is satisfied, $a_{IE}$ sleeps for $t_{mw}$, wakes up, and then the check and subsequent actions repeat.
+
+ Further, there is a second check: before leaving $v$, $a_{IE}$ checks if $v\in D$ (that is, if $v$ is dominating). If this is true, it dies (i.e.\ is deleted), in order to decrease the risk of creating a too dense dominating set, which exhibits only a low coverage per dominating node, in this area. 
+The above mechanisms and Equation \ref{tiea} are important and aim at reducing the amount of concurrency during the exploration process, thereby lowering communication cost and improving the overall result quality. Note that they are related to the second rule in the construction subblock (see Section \ref{sec_taig}).
+
+\subsubsection{IEA Next-Hop Selection}\label{secieanhs}\label{sec_inhs}
+
+If $|N_1^D(v)|=0$, so that none of $v$'s neighbors is dominating, an IEA $a_{IE}$ selects its next hop $v_x$ at node $v$ with the probability 
+	 
+	 \begin{equation}
+	 p(v_x)=\frac{qr(v_x)}{\sum_{v_i \in S_{c}}{qr(v_i)}}
+	\label{pvx}
+\end{equation}
+
+using the link quality rating $qr$ from Equation \ref{qr} in Section \ref{sec_lqr}. Else, if $|N_1^D(v)|>0$ (at least one of $v$'s neighbors is dominating), $a_{IE}$ randomly selects a node from the set of dominating $1$-hop neighbors, $N_1^D(v)$, as next hop. This \textbf{sticky behavior} aims at avoiding the creation of parallel segments of the dominating set, since they provide only little additional coverage but increase its size considerably.
+
+The set of next-hop candidates $S_c$ is computed at node $v$ using the following function, assuming tabu set $S_t=a_{IE}.ts$, $N_1(v)$ obtained from $v.nTab.v_n$, previous hop $v_p$ from $a_{IE}.p$:
+
+	\begin{equation}\label{sc}
+			S_c= \left\{ \begin{array}{rll}
+	 			 (N_1(v) \,\backslash\, S_t) \,\backslash\, v_p & \; \mbox{if} \; & |(N_1(v) \,\backslash\, S_t) \,\backslash\, v_p| \geq \eta\\
+	 			 N_1(v) \,\backslash\, v_p & \; \mbox{else if} \; & |N_1(v) \,\backslash\, v_p| \geq \eta\\
+	 			 N_1(v) & \; \mbox{else}
+	 			\end{array}\right.
+		\end{equation}
+		
+The function increases the size of the selection depending on whether there are enough ($\geq \eta$) candidates. If $N_1(v)=\emptyset$ for any reasons, such as the failure of the underlying MAC protocol to provide neighborhood information, $a_{IE}$ dies.
+
+\insertFigure{graphics/bickds_p1_stage1}{bickds_p1_stage1}{Exploration in behavior block I}{}
+
+
+
+\exampleBegin 
+The example in Figure \ref{bickds_p1_stage1} illustrates the exploration process of behavior block I. In Figure \ref{bickds_p1_stage1} (a), IEA $a_1$ has started from node $1$, being now after the second hop. Shortly after that, IEA $a_{31}$ has started from node $31$, now after its first hop. Both IEAs are fully unaware of each other, and the only interaction takes place, if they find hints of each other's visits, i.e.\ by employing stigmergy. Further, node $2$ is about to start and agent.
+
+Figure \ref{bickds_p1_stage1} (b) shows the state of the exploration after another two hops. IEA $a_2$ started from node $2$, now being after its second hop. IEAs $a_1$ and $a_{31}$ are now after their fourth and third hops. 
+
+Five hops later, Figure \ref{bickds_p1_stage1} (c) depicts the current state of the exploration process with IEA $a_{31}$ after its eighth and IEA $a_1$ after its ninth hop, arriving at node $3$. IEA $a_2$, after its seventh hop, arrives at node $7$, which was visited by $a_1$ within the last $t_{mw}$. Therefore, $a_2$ starts sleeping for $t_{mw}$, since it can be expected that $a_1$ triggers a construction for the path it traveled, starting from node $1$ until arriving at node $3$. Notice that instead of communicating directly, the agents $a_1$ and $a_2$ communicate indirectly via stigmergy.
+
+
+\exampleEnd
+
+
+\subsection{Construction}\label{p1con}
+
+
+In the exploration subblock, random walks were used by the agents to create candidate paths for the addition to the dominating set. Within the construction subblock, agents apply rules to decide which candidate path to select and subsequently conduct the addition of the selected candidate to the dominating set.
+
+\subsubsection{Trigger, ICA Generation and Structure}\label{sec_taig} The decision to add nodes to the dominating set $D$ is produced autonomously by an IEA using only local information. An IEA $a_{IE}$, visiting node $v$, decides to construct a dominating set segment, if one of the following conditions is satisfied
+
+\begin{enumerate}
+
+\item $a_{IE}.p.length \geq IEA_{wsl}$, with the walk segment length $IEA_{wsl}$
+
+\label{introieawsl}
+
+\item $v\in D$ and $a_{IE}.p.length \geq IEA_{mdcbd}$, with the minimum dominating contact build distance $IEA_{mdcbd} \leq IEA_{wsl}$. 
+
+\end{enumerate}
+
+
+If one of these conditions is satisfied, an \emph{initial construction agent} (ICA) $a_{IC}$ is generated. The initial construction agent $a_{IC}$ contains a path field $p$, which is initialized by setting it equal to $a_{IE}$'s path field ($a_{IC}.p=a_{IE}.p$). If $v$ is not dominating ($v\notin D$), $a_{IE}$ continues its walk after its path field has been cleared. Else, it dies.
+
+The information that is available to the agent includes its path and the neighborhood of the currently visited node. Thus intuitively, it suggests itself to utilize this information to decide which candidate path to add to the dominating set. However, such a decision cannot be made after any arbitrary number of hops. In order to understand why, the technique for adding nodes to the dominating set should be discussed first.
+
+Assume that an IEA $a$ has visited the path $a.p=\langle v_0, v_1, \ldots, v_l\rangle$, with $a.p.length=l$. If it decides to add the nodes in $a.p$ to the dominating set, a very simple, yet effective solution is that it creates an ICA $a'$ which is responsible for visiting the sequence of nodes $\langle v_l, v_{l-1}, \ldots, v_0\rangle$ and marking each node $\in a'.p=a.p$ as dominating. However, as the length of $a.p$ increases, the probability also grows that $a$ or $a'$ will disappear due to a communication error, for example, if the reception of the frame containing $a$ or $a'$ fails after encountering an uncorrectable amount of flipped bits. Therefore, to reduce the probability of failure, the underlying idea of the \emph{first} rule is to split up the walk of $a$ into segments of the length $IEA_{wsl}$. In other words, after $a$ walked $IEA_{wsl}$ hops, it creates ICA $a'$ to walk back $a'.p=a.p$ and to add all visited nodes to the dominating set, while $a$ clears its path field and continues its walk. As discussed extensively at the end of this chapter (see Section \ref{sec_d2}), the choice of $IEA_{wsl}$ has implications on the effective maximum dominating distance ($k'$, see Definition \defref{defkprime}), achieved after the construction of the CkDS concludes.
+
+
+After motivating the first rule, the \emph{second} one needs to be considered. It complements the rules specified in the exploration subblock which delay the departure of an IEA from a node, if it has been visited by another IEA within a certain amount of time, or let the IEA die, in case the visited node is dominating (see Section \ref{sec_idp}). Both of these rules aim to curb the amount of redundancy of dominating nodes in an area, by stopping the walk of an IEA, in case it visits a node that is dominating or a candidate for being added to the dominating set. However, they do not specify what happens to an IEA $a$, visiting a dominating node, before it dies, in other words, how its recorded path $a.p$ is utilized. It is important to make use of $a.p$, since else the cost incurred by $a$ would not yield much benefit. Here the second rule is applied to realize this. When the path walked by $a$ which currently visits a dominating node exceeds a certain length, that is if $a.p.length \geq IEA_{mdcbd}$, it creates ICA $a'$, setting $a'.p=a.p$, before dying. Subsequently $a'$ walks along $a'.p$ adding all visited nodes to the dominating set. Similar to $IEA_{wsl}$, the choice of $IEA_{mdcbd}$ has implications on the dominating distance ($k'$, see Definition \defref{defkprime}) of the final CkDS, as discussed at the end of this chapter (see Section \ref{sec_d2}).
+
+
+
+\abbrev{ICA}{Initial Construction Agent}
+
+\subsubsection{Addition of Nodes to the Dominating Set by ICA}\label{sec_aont}
+
+$a_{IC}$, whose creation and initialization was described above (see Section \ref{sec_taig}), follows the node sequence stored in its path field, $a_{IC}.p$, marking each node on its path (including $v$) as dominating, before it dies. If, visiting node $v_i$, the next hop in the path $a_{IC}.p$ after $v_i$ does not exist in $v_i.nTab$, $a_{IC}$ dies immediately. 
+
+Each node marked as dominating announces its new state to its $1$-hop neighbors using broadcast. This allows its neighbors to realize the sticky behavior described further above (see Section \ref{sec_inhs}). Note that the size of the broadcast packet is minimal, since only the ID of the sender and its new state have to be announced, as well as, that this is the \emph{only} point at which a broadcast is employed in this protocol. Therefore, the \emph{total} number of broadcasts used by the protocol equals exactly the size of the dominating set $D$.
+
+\insertFigure{graphics/bickds_p1_stage2}{bickds_p1_stage2}{Exploration and construction in behavior block I}{}
+
+\exampleBegin
+
+Five hops after Figure \ref{bickds_p1_stage1} (b), Figure \ref{bickds_p1_stage1} (c) depicts the current state of the exploration process with IEA $a_{31}$ after its eighth and IEA $a_1$ after its ninth hop, arriving at node $3$. In the example, the IEAs' walk segment length $IEA_{wsl}=9$ and the minimum dominating contact build distance $IEA_{mdcbd} = 6$. 
+
+In Figure \ref{bickds_p1_stage1} (c), the length of the path traveled by $a_1$ is equal to the walk segment length, $a_1.p.length = IEA_{wsl}$, at node $3$ (condition 1 satisfied). Thus node $3$ generates an ICA $a_3$, initializing it with $a_1$'s path, setting $a_3.p=a_1.p$ (i.e.\ $a_3.p$ assumes the value of $a_1.p$). Accordingly, ICA $a_3$ starts following $a_3.p$ towards $1$, marking all visited nodes as dominating. At the same time, $a_1$ continues its walk after clearing its path field, with $a_1.p =\langle \rangle$, from node $3$.
+
+The result of the operations described above is shown in Figure \ref{bickds_p1_stage2} (a)  after three additional hops. ICA $a_3$ has now marked four nodes as dominating, arriving at node $5$.  Similarly, IEA $a_{31}$, which started at node $31$ and is now at node $36$, reached its walk segment length at node $32$ two hops ago and triggered an ICA $a_{32}$, now at node $33$ heading towards $31$.
+
+Figure \ref{bickds_p1_stage2} (b) depicts the scenario after six additional hops. ICA $a_3$, dispatched at node $3$, now has reached node $1$, adding all nodes on the visited path to the dominating set. Similarly, ICA $a_{32}$ is now at node $34$ and has only one additional hop to follow. The IEAs $a_{31}$ and $a_1$ reached nodes $37$ and $8$. $a_1$ starts sleeping, since IEA $a_2$ visited node $8$ within the last $t_{mw}$. Notice that while the construction is already in progress, new IEAs may start, such as IEA $a_{35}$ from node $35$, now after its third hop. 
+
+Being at \emph{dominating} node $7$ in Figure \ref{bickds_p1_stage2} (b), IEA $a_2$ wakes up after sleeping for $t_{mw}$ and compares its path length to the minimum dominating contact build distance. Since $a_2.p.length\geq IEA_{mdcbd}$ (condition 2 satisfied), node $7$ creates an ICA $a_7$ copying the path from IEA $a_2$ ($a_7.p=a_2.p$). Thereafter, $a_2$ dies, since being at a dominating node, and ICA $a_7$ starts its walk towards node $2$ according $a_7.p$.
+
+ 
+Seven hops later, the example scenario is depicted in Figure \ref{bickds_p1_stage2} (c). ICA $a_7$, now at node $2$, followed its path $a_7.p$, starting at node $7$ and marking all visited nodes as dominating; $a_7$ dies, since it achieved its objective. ICAs $a_{42}$ and $a_{11}$, now at nodes $40$ and $41$, were created at nodes $42$ (condition 1) and $11$ (condition 2). They currently follow their paths, marking visited nodes as dominating. Moreover, the actions by ICAs $a_7$ and $a_{11}$ lead to the emergence of centers $7$ and $11$.
+
+In Figure \ref{bickds_p1_stage2} (c), at node $42$, IEA $a_{31}$ continued its walk after clearing its path field. 
+When IEA $a_{31}$ migrates from node $38$ to node $39$, for the purpose of illustration, a communication error occurs due to e.g.\ an uncorrectable amount of flipped bits, leading to the death of $a_{31}$ (as evident from the figure, this is fully tolerated by the protocol). At node $8$, IEA $a_1$ wakes up after sleeping for $t_{mw}$, but the length of the path it traveled is lower than the minimum dominating contact build distance, i.e.\ $a_1.p.length < IEA_{mdcbd}$: it dies without triggering any further actions. Assuming that no new agents are created in behavior block I, the construction efforts from Figure \ref{bickds_p1_stage2} (c) lead to the situation depicted in Figure \ref{bickds_p2_stage1} (a). Notice that this clear separation between behavior blocks serves only the purpose of illustration and that, in a simulated or real-world execution, behavior blocks I and II operate completely in parallel.
+
+\exampleEnd
+
+\abbrev{CIPA}{Center Information Propagation Agent}
+
+
+
+
+\subsubsection{Propagation of Center Information by CIPA}\label{introcipamh}\label{sec_poci}
+If a node $v_c$ has become a center, it generates a \emph{center information propagation agent} (CIPA) $a_{CIP}$. Its objective is to propagate center information within $CIPA_{mh}$ distance along dominating nodes. This information is used in the second behavior block to assess the local connectivity and to locally recognize disconnected segments of $D$ (see Sections \ref{sec_cr} and \ref{sec_oonh}). $a_{CIP}$ consists of the fields: $\langle src,pre, h \rangle$, which represent the source center $v_c$, the previous hop of $a_{CIP}$, and a hop counter, initialized to $0$. 
+
+Arriving at node $v_d$, if $a_{CIP}.h>CIPA_{mh}$ or $a_{CIP}.src$ exists in $v_d.cdTab$, $a_{CIP}$ dies. Else and upon its creation, being at node $v_d$, it selects all nodes from $N_1^D(v_d) \,\backslash\, a_{CIP}.pre$ as next hops, replicating adequately. Further it leaves a copy of itself $a_{CIPs}$ sleeping at the current node. If $|N_1^D(v_d)|$ of a node $v_d$ increases, $a_{CIPs}$ wakes up and sends a copy of itself, named $a_{CIP}$, to the new member of $N_1^D(v_d)$, before going to sleep again. At each node $v_d$ that $a_{CIP}$ visits, $v_d.cdTab(a_{CIP}.src).d=a_{CIP}.h$.
+
+
+\exampleBegin Assuming $CIPA_{mh}=10$, in Figure \ref{bickds_p1_stage2} (c), a CIPA $a_7'$, generated by the new center $7$, reaches all dominating nodes within its connected dominating segment, including, for example, nodes $1$ and $3$.
+
+\exampleEnd
+
+It should be remarked that at this point no precise statement can be made about the state of the construction, since both behavior blocks and their subblocks are fully executed in parallel. Therefore I discuss the properties of the produced structure after the construction process concludes, in Section \ref{sec_d2}, at the end of this chapter.
+
+\section{Behavior Block II: Transformation to a Connected $k$-Hop Dominating Set}\label{sb2}\label{sec_bbii2}
+
+The second behavior block, which is intertwined with the first one, connects the dominating set segments added in the first block to a CkDS. Similar to the first behavior block, the second is subdivided into two subblocks, which are executed in parallel, realizing exploration and construction.
+
+In the first subblock (Section \ref{p2ex}), a swarm of agents explores the network area to find remote, disconnected segments of the dominating set. The agents, drawing inspiration from the flight behavior of ovipositing P. rapae, move through the network similar to exploration agents from the first behavior block and their natural counterparts, employing a probabilistic next-hop selection, given certain conditions (Section \ref{sec_nhsd}). Nevertheless, since the objective is, in contrast to the first behavior block, to connect already existing segments of the dominating set as efficiently as possible, there are four main adjustments, which will be described in full detail after the following overview:
+
+\begin{enumerate}
+
+		\item Exploration agents start and conclude their walks only at dominating nodes, since their primary goal is to find connections between disconnected dominating set segments (see Section \ref{sec_gtoc}).
+
+		\item Their generation rate (see Section \ref{sec_gtoc}) depends on local connectivity properties, which are rated to assess the necessity of generation. For this, center nodes (nodes with more than two dominating $1$-hop neighbors) are regarded as landmarks (see Section \ref{sec_cr}). Based on the landmarks' number and distance to the current node, the complexity of the surrounding dominating set segment is estimated. The method aims at reducing cost, where it is adequate, by decreasing the number of agents generated. 
+
+		\item The exploration agents' random walks exhibit a preference for nodes that were previously selected less often as next hops (see Section \ref{sec_nhsd}). This strategy has two aims: reduction of the total number of walks and therefore also the reduction of communication cost.
+
+		\item Next-hop selection includes a greedy component that lets exploration agents walk directly towards dominating set segments that are considered disjoint (see Section \ref{sec_nhsd2}), to further save communication cost. The information necessary to recognize and approach segments that appear to be disjoint is supplied using stigmergy (see Section \ref{sec_pwfc}; for an overview of stigmergy refer to \cite{theraulazB99history}).
+	
+\end{enumerate}
+
+
+In order to enable the use of stigmergy in points (3) and (4), agents need to carry and deposit additional connectivity information on nodes they visit (see Section \ref{sec_pwfc}). 
+
+Finally, for the second subblock (construction, see Section \ref{p2con}), to obtain a CkDS based on the above preparatory work, the necessary rules are specified on how nodes are selected for addition to the dominating set and in what way this is carried out.
+
+
+\subsection{Exploration}\label{p2ex}
+
+Exploration is realized using \emph{connection exploration agents} (CEAs), which have the objective to explore connections between disconnected segments of the dominating set $D$.
+
+\abbrev{CEAs}{Connection Exploration Agents}
+
+\subsubsection{Generation Times of CEAs}\label{sec_gtoc} For the first time, at node $v_d$, a CEA is generated $t_{CEA}$ time after $v_d$ has become member of $D$. The intervals between the first and further generations of a CEA at $v_d$ are defined as follows: 
+
+		\begin{equation}\label{tcea}
+			t_{CEA} = \left\{ \begin{array}{rll}
+			t_{CEA} \cdot (\beta_1 + \beta_2 \cdot cr(S_c')^\sigma) & \; \mbox{if} \; & t_{CEA} \leq t_{CEAmg} \\
+			\infty & \; \mbox{else}
+			\end{array}\right.
+		\end{equation}
+
+with, 
+
+\begin{itemize}
+
+	\item $t_{CEA} > 1$: the current interval between two 	successive CEA generations. To compute $t_{CEA}$, its previous value is multiplied by a factor which is greater than $1$.
+	
+	\item $\beta_1 > 1$: a basic summand, representing the value that is at least used for multiplication with the previous value of $t_{CEA}$. 
+	
+	\item $S_c'$: the set of centers from $v_d$'s center distance table ($S_c'=v_d.cdTab.v_c$, see Section \ref{sec_lds})
+	
+	\item $cr$: connectivity rating used to assess the amount of connectivity and thus also the need for further connections, defined in Equation \ref{cr} in Section \ref{sec_cr}.
+	
+	\item $\beta_2, \sigma \geq 0$: weights for $cr$
+	
+	\item $t_{CEAmg}$: the maximum generation time of a CEA
+
+\end{itemize}
+
+The design of the function is based on the following ideas and considerations: The connection efforts can only start after a node has become dominating. Therefore, the first CEA is generated $t_{CEA}$ after this event. $t_{CEA}$'s initial value is defined before the start of the protocol. It should be much greater than the typical time needed by an agent to migrate between nodes, so that a certain amount of structure is already present at the time of the first agent generation, and centers, serving as \emph{landmarks} in the connectivity rating, are likely to be already established. 
+
+During the evolution of the protocol, it became clear that usually a single CEA per dominating node is not sufficient. Thus CEAs are generated one or multiple times at each dominating node and, in Equation \ref{tcea}, $t_{CEA}$ is updated after each generation. The function prolongs the intervals between subsequent generations in the described manner for two reasons: 
+
+\begin{itemize}
+
+	\item To enable a rapid interconnection in the beginning. 
+	
+	\item To spread connectivity efforts over the available time period, so that information which has been deposited in the network in the meantime can be utilized through stigmergy to create interconnections, if this is still necessary at a later time. 
+	
+\end{itemize}
+	
+Finally, the time between agent generations also depends on the evaluation of the surrounding dominating set segment by the connectivity rating, which is described next.
+
+\subsubsection{Connectivity Rating and CEA Structure}\label{sec_cr}
+
+In order to estimate the connectivity, the protocol uses the following \emph{connectivity rating} at node $v_d\in D$:
+
+\begin{equation}\label{cr}\label{eq_crsc}
+  cr(S_c') = \sum_{c_i \in S_c'}{\max{(CIPA_{mh} - v_d.cdTab(c_i).d,0)}}
+\end{equation}
+
+As discussed in Section \ref{sec_poci}, $CIPA_{mh}$ determines the maximum number of hops a center information propagation agent (CIPA) may travel. Therefore, this constant also defines the size of the dominating environment in which centers are known, or visible. The maximum function in Equation \ref{eq_crsc} has the purpose to avoid negative summands in case, for example, due to changes in the parameters, a center is believed to be more than $CIPA_{mh}$ hops away from the current node $v_d$.
+
+The underlying idea of this function is to employ centers as \textbf{landmarks}, which provide cues about the connectivity of the dominating neighborhood: the more and the closer to $v_d$ the centers in $S_c'$ are, the denser the dominating set in $v_d$'s vicinity, and thereby the lower the local need for connection exploration is estimated. In other words, the constellation of centers, i.e.\ their distance and number, around $v_d$ is interpreted as indication for the degree of connectivity in $v_d$'s neighborhood and necessity, as well as, stimulus for further exploration. 
+
+
+
+A CEA $a_{CE}$, generated at node $v_d$, contains the fields $\langle p,ck,ts \rangle$:
+
+\begin{itemize}
+		\item $p$: the path traveled by the CEA, initialized by setting $a_{CE}.p=\langle \rangle$. 
+		
+		\item $ck$: the centers known at the generation node $v_d$, initialized by $a_{CE}.ck=v_d.cdTab.v_c$. This information is central to enable the local recognition of disjoint dominating set segments, outlined in Section \ref{sec_oonh}.
+		
+		\item $ts$: the tabu set
+\end{itemize}
+
+After being generated and initialized, CEA $a_{CE}$ leaves node $v_d$ as described further below (see Section \ref{sec_oonh}).
+\todoh{find a better name for the following paragraph}
+
+\subsubsection{Preparatory Work for Connectivity Exploration}\label{sec_pwfc} During their walk through the network, CEAs maintain their own data structures but also data structures at the visited nodes, i.e.\ the interconnection and the next-hop utilization tables, in order to enable succeeding agents to exploit this information through stigmergy mainly for the following purposes:
+
+\begin{itemize}
+
+\item The local recognition of disjoint dominating set segments, which is important to trigger the greedy part of a CEA's behavior (see Section \ref{sec_nhsd2}).
+
+\item To enable a CEA to move towards a dominating set segment locally recognized as disjoint, when behaving in a greedy manner (see Section \ref{sec_nhsd2}).
+
+\item To allow the probabilistic part of a CEA's behavior to balance the utilization of next-hop candidates (see Section \ref{sec_nhsd}).
+
+\end{itemize}
+
+In order to conduct the preparatory work for the above functionality, which will be described further below (see Section \ref{sec_oonh}), on every visited node $v$, $a_{CE}$ adds $v$ to its path field $a_{CE}.p$, recording the path for later use. It further adds/updates the interconnection table entry $v.iTab(a_{CE}.p.source)$ using the information it carries (i.e.\ $a_{CE}.p$, $a_{CE}.ck$). This makes it possible for succeeding agents to recognize a center in the interconnection table as unknown and to obtain a path towards it. 
+
+Further, when CEA $a_{CE}$ leaves node $v$ to migrate to next-hop node $v_n$, it adds the $v.nhuTab$ $(a_{CE}.p.source,v_n)$ entry, initializing $v.nhuTab(a_{CE}.p.source,v_n).uf=1$ or, if already existing, sets $v.nhuTab(a_{CE}.p.source,v_n).uf=v.nhuTab(a_{CE}.p.source,v_n).uf+1$. This information provides the basis for the probabilistic and deterministic next-hop selection methods (described below in Section \ref{sec_oonh}) employed by CEAs.
+
+
+\subsubsection{Outline of Next-Hop Selection during Connectivity Exploration}\label{sec_oonh}\label{secoonhs} For next-hop selection, a CEA distinguishes the following two cases, which are discussed in more detail further below: 
+
+\begin{enumerate}
+
+	\item A disjoint dominating set segment \emph{is not} recognized based on the interconnection table and the agent's center information, or the agent is before its first hop (see Section \ref{sec_nhsd}). In this case, it follows a random walk taking into account link quality and utilization.
+	
+	\item A disjoint dominating set segment \emph{is locally} recognized based on the interconnection table and the agent's center information, and the agent is not before its first hop (see Section \ref{sec_nhsd2}). Thus, it randomly selects from the locally recognized disjoint dominating set segments that appear to be the closest.
+
+\end{enumerate}
+
+To recognize a dominating set segment as locally disconnected, a CEA $a_{CE}$ basically compares its field containing known centers, $a_{CE}.ck$ (see Section \ref{sec_cr}), with the information available in a node $v$'s interconnection table, $v.iTab.cns$ (see Section \ref{sec_lds}), deposited by agents previously visiting node $v$ (see Section \ref{sec_pwfc}). If $a_{CE}$ finds centers in $v.iTab.cns$ that it does not know, it assumes that they will probably belong to a dominating set segment that is not connected to the dominating set segment which it departed from. Since, however, all information available is local, i.e.\ describing state only within the neighborhood of a limited number of hops, this recognition is not reliable and therefore called a \emph{local} recognition. In other words, although a dominating set segment is considered (or apparently) disjoint, there is no guarantee for this property. However, that does not compromise the operation of the proposed protocol and is an inherent part of its nature. Before further discussing this issue in Section \ref{sec_iolr}, the recognition mechanism, as well as, the probabilistic and the greedy  parts of a CEA's behavior, triggered depending on the recognition, are described in the following paragraphs.
+
+\subsubsection{Next-Hop Selection during Connectivity Exploration, Case 1: Disjoint Dominating Set Segment not Recognized or before First Hop}\label{sec_nhsd} If visiting a non-dominating node $v \notin D$ and $v.iTab.cns \,\backslash\, a_{CE}.ck = \emptyset$, i.e.\ a disjoint dominating set segment is \emph{not} recognized, or if $a_{CE}.p=\langle \rangle$, i.e.\ $a_{CE}$ is before its first hop, the CEA $a_{CE}$ proceeds as follows: it conducts a random walk similar to the IEA, but using the extended link rating $er$ from Equation \ref{er} (see Section \ref{sec_iwnh}) instead of link quality rating $qr$ (see Section \ref{sec_lqr}) during the \emph{probabilistic} next-hop selection (see Equation \ref{pvx} in Section \ref{sec_inhs}). The extended link rating $er$ integrates the link quality rating $qr$ with the utilization rating $ur$, described in Equation \ref{ur} in Section \ref{sec_ur}. This way, the utilization of the next-hop links is taken into account, so that next-hop choices are spread more evenly---or in other words---there is a (tunable amount of) preference for new solution candidates. 
+
+\insertFigure{graphics/bickds_p2_stage1}{bickds_p2_stage1}{Exploration in behavior block II}{}
+
+
+\exampleBegin
+
+Figure \ref{bickds_p2_stage1} (a) shows the result of the operations conducted in Figure \ref{bickds_p1_stage2} (c), continuing the example. In Figure \ref{bickds_p2_stage1} (b), node $13$ created a CEA $a_{13}$, which now arrives at node $14$, after visiting nodes $23$ and $22$, with the following path and center-related information: $a_{13}.p=\langle 13,23,22,14 \rangle$ and $a_{13}.ck=\{11\}$, assuming that node $13$ is aware of center $11$, provided $CIPA_{mh}=10$. Now $a_{13}$ adds the information it carries to an empty interconnection table, $14.iTab$, so that: $14.iTab(13).cns=\{11\}$, $14.iTab(13).p=\langle 13,23,22,14 \rangle$. 
+
+In order to allow succeeding CEAs to balance their next-hop choices among the available candidates, the next-hop utilization table needs to be maintained by CEA $a_{13}$. For the purpose of illustration, assume first that the next-hop utilization table of node $14$ is empty. If, in Figure \ref{bickds_p2_stage1} (b), CEA $a_{13}$, which is at node $14$, selects node $18$ as next hop, it sets $14.nhuTab(13,18).uf=1$. 
+
+Consider a different situation: after the events above, further CEAs stop over at node $14$, which results in $14.nhuTab(13,15).uf=2$, $14.nhuTab(13,16).uf=3$, $14.nhuTab(13,17).uf=3$, and $14.nhuTab(13,18).uf=2$. At this point, when a CEA at node $14$ decides probabilistically for a next hop, it employs the extended rating $er$, which includes the utilization rating $ur$, described in Equation \ref{ur} in Section \ref{sec_ur}: in this case, the utilization rating $ur(13,16)=1-\frac{3}{2+3+3+2}=0.7$ at node $14$ for a CEA originating from node $13$.
+
+\exampleEnd
+
+\subsubsection{Next-Hop Selection during Connectivity Exploration, Case 2: Disjoint Dominating Set Segment Locally Recognized and not before First Hop} \label{sec_nhsd2} If $a_{CE}$ arrives at a non-dominating node $v \notin D$ and $v.iTab.cns \,\backslash\, a_{CE}.ck \neq \emptyset$ (this way a disjoint dominating set segment is locally recognized), it selects a center from $v.iTab.cns \,\backslash\, a_{CE}.ck$ (i.e.\ one of the centers believed to belong to a disjoint segment) which is associated with the shortest path to some dominating node $v_d$. Ties are broken using node IDs. $a_{CE}$ then chooses the next hop obtained from $v.iTab(v_d).p$. 
+
+Note that the above recognition is not reliable, since it is based only on the local knowledge of a CEA. However, this very part of the protocol does not have any negative influence on the protocol's behavior, as discussed further below, in Section \ref{sec_iolr}.
+
+This \emph{deterministic} selection method is used in order to reduce the time and the communication cost of exploration. Notice that it is based on $iTab$ entries that were modified by CEAs which were selecting their next hops probabilistically (see Sections \ref{sec_pwfc} and \ref{sec_nhsd}). Therefore, the final parts of the solution, the connections, are obtained as a result of a \emph{non}-deterministic behavior. 
+In addition to the above methods, after the second hop, a CEA exhibits the same \emph{sticky behavior} as an IEA (see Section \ref{sec_inhs}). It also handles failures similar to an IEA.
+
+\insertFigure{graphics/bickds_p2_stage2}{bickds_p2_stage2}{Exploration and construction in behavior block II}{}
+
+\exampleBegin
+
+In Figure \ref{bickds_p2_stage2} (a), the example from Figure \ref{bickds_p2_stage1} continues. Assume that there were further CEAs originating from nodes $19$, $20$, and $21$ that have visited node $14$, adding the entries $14.iTab(19).cns, 14.iTab(20).cns=\{7\}$ and $14.iTab(21).cns=\{11\}$. The paths traveled by these agents until reaching node $14$ are depicted using dotted lines and were also added to $14.iTab$. CEA $a_{13}$, currently at node $14$, does not know center $7$, as $14.iTab.cns \,\backslash\, a_{13}.ck=\{7,11\}\,\backslash\,\{11\}=\{7\}\neq\emptyset$. Since the path towards node $19$ is the shortest known path to the segment considered disjoint, i.e.\ $14.iTab(19).p.length < 14.iTab(20).p.length$, CEA $a_{13}$ will choose greedily $16$ as next hop, as depicted in Figure \ref{bickds_p2_stage2} (b).
+
+\exampleEnd
+
+
+
+\subsubsection{Implications of Local Recognition Mechanism}\label{sec_iolr}
+
+Although a CEA may locally recognize a dominating set part $B$ as disjoint (see Section \ref{sec_nhsd2}), $B$ may nonetheless be connected to the dominating set part $A$, the agent originates from. This situation occurs, when the center information propagation ranges, corresponding to $CIPA_{mh}$, of the centers identifying $A$ and $B$ do not overlap at the point of evaluation ($CIPA_{mh}$ represents the maximum number of hops a center information propagation agent is allowed to walk, described in Section \ref{sec_poci}). However, given the design decision to only use local knowledge in order to generate the positive effects associated with self-organization, there is no means to provide a guarantee for disjointness from an agent's local point of view.
+
+\exampleBegin
+
+Figure \ref{bickds_p2_recognition} depicts a situation in which CEA $a_{13}$ started at node $13$ and now arrived at node $14$. Since $CIPA_{mh}=10$, $a_{13}$ is only aware of center $11$, i.e.\ $a_{13}.ck=\{11\}$. At node $14$, $a_{13}$ finds the interconnection information $14.iTab(19).cns=\{7\}$ because at node $19$ (point of evaluation), from which an agent, depositing this information at node $14$, originated, only center $7$ is known. As $14.iTab.cns \,\backslash\, a_{13}.ck=\{7\} \,\backslash\, \{ 11\}\neq \emptyset$, CEA $a_{13}$ assumes to have recognized a disjoint dominating set segment, although this is evidently not the case.
+
+\exampleEnd
+
+
+
+As it becomes clear from the example, the probability for the discussed situation to occur could be reduced by increasing $CIPA_{mh}$, which might consequently incur higher costs. Then again, such situations can be considered parts of the overall process that contribute to a construction of a CkDS with a particular dominating distance. Note that the connection in Figure \ref{bickds_p2_recognition} between nodes $13$ and $19$ would not result in an undesirable amount of redundancy of dominating nodes. On the contrary, in the situation depicted in Figure \ref{bickds_p2_recognition_good}, a connection between nodes $13$ and $19$ can even be considered useful, for instance, to shorten path lengths, when a routing protocol is executed on top of the CkDS. At the same time, an interconnection that highly increases the amount of redundancy, such as in Figure \ref{bickds_p2_recognition_ok}, would be avoided by recognizing the existing connections. Consequently, the $CIPA_{mh}$ parameter can be employed to adjust the amount of redundancy incurred by interconnections of distant parts of the dominating set, as well as, the achieved dominating distance, which will be discussed further below, in Section \ref{sec_d2}.
+
+\insertFigure{graphics/bickds_p2_recognition}{bickds_p2_recognition}{Disjoint dominating set part locally recognized}{}
+
+\insertFigure{graphics/bickds_p2_recognition_good}{bickds_p2_recognition_good}{Disjoint dominating set part locally recognized in extended network}{}
+
+\insertFigure{graphics/bickds_p2_recognition_ok}{bickds_p2_recognition_ok}{Disjoint dominating set part \emph{not} recognized}{}
+
+
+
+\subsection{Construction}\label{p2con}
+
+If CEA $a_{CE}$ arrives at a dominating node $v_d \in D$, it checks if $v_d.cdTab.v_c \,\backslash\, a_{CE}.ck \neq \emptyset$, that is whether $v_d$ appears to belong to a disjoint dominating set segment. If this condition is satisfied, it generates a \emph{connection construction agent} (CCA) $a_{CC}$, containing only the field $p$ and dies, after setting $a_{CC}.p=a_{CE}.p$ ($a_{CC}.p$ assumes the value of $a_{CE}.p$). Else ($v_d.cdTab.v_c \,\backslash\, a_{CE}.ck = \emptyset$) $a_{CE}$ dies without any actions.
+\todoh{hidden on dec 11, 09 maybe add some comment here about connectivity etc.}
+
+\abbrev{CCA}{Connection Construction Agent}
+
+
+After its generation and initialization, CCA $a_{CC}$ follows $a_{CC}.p$, marking all visited nodes as dominating, thus creating a connection, and dies afterwards. It uses the same failure handling as an ICA (see Section \ref{sec_aont}).
+
+\exampleBegin 
+Assume that CEA $a_{13}$ from the above examples greedily followed the path from node $14$ via node $16$ towards node $19$, as depicted in Figure \ref{bickds_p2_stage2} (b). Next, $a_{13}$ checks whether the centers known by it, in this case center $11$, are present in the center distance table of node $19$, that is whether $19.cdTab.v_c \,\backslash\, a_{13}.ck \neq \emptyset$, in this example whether $\{7\} \,\backslash\, \{11\}\neq \emptyset$. This condition is satisfied, so that node $19$ creates a new CCA $a_{19}$, initializes it with $a_{13}$'s path, setting $a_{19}.p=a_{13}.p$, and lets $a_{13}$ die thereafter. Finally, $a_{19}$ follows $a_{19}.p$, marking all visited nodes as dominating, before it dies. This creates two new centers, $13$ and $19$, and results in the final state depicted in Figure \ref{bickds_p2_stage2} (c).
+\exampleEnd
+
+
+
+\section{Discussion}\label{ourprotdisc}\label{sec_d2}
+
+
+The proposed CkDS construction process is self-organizing according to the definition by Camazine, Deneubourg, and colleagues from their seminal book on self-organization in biological systems \cite{camazine03organization}:
+
+\begin{quote}
+Self-organization is a process in which pattern at the global level of a system emerges solely from numerous interactions among the lower-level components of the system. Moreover, the rules specifying interactions among the system's components are executed using only local information, without reference to the global pattern.
+\end{quote}
+
+This definition carries several implications:
+
+\begin{enumerate}
+
+	\item Self-organization yields a global-level result. In the proposed process it is a CkDS.
+	
+	\item The utilization of only lower-level interactions and local information translates to low requirements in terms of information exchange. Since the amount of information exchanged highly influences energy consumption (see Section \ref{sechardware}), this is an especially desirable property in wireless sensor networks.
+	
+	\item There is no reference between the execution based on local information at a lower level and the global-level result. This implies that there is no parameter directly corresponding to $k$ in the proposed process.
+
+\end{enumerate}
+
+In summary, self-organization promises to efficiently yield the desired result, however, there is no direct link between lower levels and the global level. Therefore, it is not possible to set a $k$ at a lower level and obtain a CkDS with this exact $k$ at the global level. Similarly, it cannot be guaranteed that the solution is connected or that two parts of the dominating set can be reliably recognized as disjoint. This missing reference between the lower levels and the global level is a property that the proposed protocol shares with many other related, self-organizing protocols. Ant colony routing \cite{bonabeauDT99intelligence} can well serve as an example: ants are confronted with the challenge of navigating through complex, unknown terrain or vast labyrinths within their formicaries. Their self-organizing protocol can be examined according to the above points:
+
+\begin{enumerate}
+
+\item Using self-organization, they produce a structure consisting of the shortest paths between their points of interest, such as food sources and their formicaries' food storage facilities.
+
+\item Ants solely use lower-level interactions and local information by depositing and perceiving pheromone, as well as, other ants in their direct vicinity.
+
+\item There is no reference between the rules the ants execute based on local information at a lower level and producing a structure consisting of the shortest paths between a network of points of interest.
+
+\end{enumerate}
+
+However, naturally self-organization also entails that ants do not always find a structure consisting of the shortest paths between their points of interest. In fact, Goss and colleagues showed for the Argentine ant (Iridomyrmex humilis) \cite{gossADP89shortcuts} that, for example, given two alternatives, when the ratio of the long path's to the short path's length was $2$, only in 11 out of 14 experiments more than 80 \% of the total traffic used the short path. In general, they conclude that the colonies' probability of selecting the shortest path increases with the difference between two alternative paths.
+
+\begin{sloppypar}
+Given the above considerations, it is evident that the proposed approach---since it is self-organizing---cannot guarantee connectivity or an exact dominating distance $k$. However, in simulations used for evaluation with up to 3000 nodes, the fraction of disconnected dominating sets was extremely close to 0. Moreover, as the results in Chapter \ref{chapres} indicate, there is a strong correlation between the parameters $IEA_{wsl}$, $IEA_{mdcbd}$, $CIPA_{mh}$ and the desired dominating distance. Therefore, for example, in a real-world application of the CkDS, a desired $k$ can be achieved in a straightforward manner by adjusting $IEA_{wsl}$, $IEA_{mdcbd}$, and $CIPA_{mh}$ appropriately, as discussed in Section \ref{secoff}.
+\end{sloppypar}
+
+
+Within this context, the nature of the definition of a CkDS should be reexamined. A CkDS with $k=u$ is always also a CkDS with $k\geq u$ according to Definition \defref{defckds}. In other words, a CkDS with $k=11$ is always also a CkDS with $k=1000$. Given this imprecision, I introduce a precise distance definition (\defref{defkprime}), which implies that for $k'$:
+
+\begin{enumerate}
+
+\item There is no node $v$ which is further away from the dominating node closest to $v$ than $k'$ hops.
+
+\item There is a node $v'$ which is $k'$ hops distant from the dominating node closest to $v'$. 
+
+\end{enumerate}
+
+ Therefore basically, after setting a certain $k$, the result produced by most related approaches is a C$k'$DS with $k'\leq k$, when assuming perfect, or lossless, communication channels. The discrepancy between $k$ and $k'$ depends on the exact process of CkDS construction. For example, the connected clustering-based approaches \cite{theoleyreV04structure, theoleyreV05stabilization, yangWC05clustering} can be expected to be especially prone to this phenomenon, since they first produce a $k$-hop dominating set, which they connect subsequently. In contrast, this phenomenon is non-existent in the proposed approach.
+ 
+
+In addition to the above issue, there is a second phenomenon to be considered, when non-perfect, or lossy, communication channels are used. This is especially the case in wireless sensor networks, in which the links between nodes can be expected to be highly unreliable (see Section \ref{seccom}). Therefore, in practice, the resulting $k'$ of a CkDS may be even \emph{greater} than the specified $k$ in all related approaches \cite{sausenSLP07backbones, theoleyreV04structure, theoleyreV05stabilization, yangLT08algorithm, yangWC05clustering}, as shown in Section \ref{secoff} for the reference approach \cite{sausenSLP07backbones}. This is due to, for example, election messages not arriving at the recipient after a transmission failure, which leads to a node not participating in an election---a violation of the protocol specifications. In contrast, the proposed protocol exhibited a high amount of predictability in terms of $k'$ even in the unreliable wireless network employed for simulations (see Section \ref{secoff}).
+
+In summary, the protocols from state of the art \cite{sausenSLP07backbones, theoleyreV04structure, theoleyreV05stabilization, yangLT08algorithm, yangWC05clustering} allow the user to specify the desired dominating distance $k$ in the CkDS to be constructed. However, it is evident that none of them can guarantee to produce a \emph{connected} kDS with the desired $k$ in the presence of an unreliable medium, which has been demonstrated for the reference approach \cite{sausenSLP07backbones} in the results chapter. The protocol proposed in this document does not allow the user to specify a desired $k$, given its self-organizing nature. Instead, it employs parameters which highly correlate with $k$ and $k'$. They can be adjusted to reliably achieve the desired $k$/$k'$ in a CkDS even in the presence of a highly unreliable medium, as shown in the next chapter and Section \ref{secoff} in particular.
+
+\section{Summary}
+
+This chapter presented the proposed approach to CkDS construction, after discussing its inspiration and the considerations during its design, as well as, providing definitions needed in the subsequent sections. 
+During oviposition, fecund Pieris rapae females aim to balance the necessity of egg spreading, utilized to average out variations in larval survivorship, and energy spent for relocation. Therefore, they employ random walks to visit a subset of hosts for oviposition. When considering the area used for these activities, an adequate section of the flight trajectory of P. rapae represents an $s$-distant connected structure. The basic idea of the protocol, proposed in this chapter, is to imitate and adapt P. rapae's behavior to create CkDS in wireless sensor networks, while inheriting several of its desirable properties: distribution, parallelism, asynchronity, use of only local knowledge and lower-level interactions, randomization, redundancy, scalability, robustness, as well as, self-organization. 
+
+The proposed protocol is self-organizing,
+since a global-level pattern, the CkDS, emerges
+solely from numerous lower-level interactions, specified by
+rules executed using only local information, without reference
+to the global pattern. It consists of two intertwined
+behavior blocks, which are both essentially based on random
+walks: the first is responsible for the construction of a
+dominating set, while the second connects the existing
+segments of dominating nodes to a connected $k$-hop dominating
+set. The proposed approach is the first CkDS (and also CDS) construction protocol for wireless networks to employ random walks. 
+
+In order to avoid redundancies within this chapter, I refer the reader to Section \ref{bickds_sec_outline}, which provides a comprehensive summary of the proposed protocol. 

@@ -1,0 +1,205 @@
+\begin{thebibliography}{10}
+
+\bibitem{a:gartner}
+Gartner it glossary.
+
+\bibitem{a:def1}
+{\em An introduction to the big data landscape}.
+\newblock O'Reilly, 2012.
+
+\bibitem{a:IBM}
+{\em Understanding Big Data Analytics for Enterprose Class Hadoop and Streaming
+  Data}.
+\newblock McGraw Hill, 2012.
+
+\bibitem{a:veracity}
+{\em Performance and Capacity Implications for Big Data}.
+\newblock IBM Red Paper, 2014.
+
+\bibitem{a:Akidu}
+Tyler Akidau.
+\newblock The world beyond batch: Streaming 101, Aug 2015.
+
+\bibitem{a:NLP}
+G.~Chowdhury.
+\newblock Natural language processing.
+\newblock {\em Annual Review of Information Science and Technology}, 2003.
+
+\bibitem{a:wiki}
+K.~Coursey and R.~Mihalcea.
+\newblock Topic identification using wikipedia graph centrality.
+\newblock In {\em Proceedings of NAACL HLT'2009, Boulder, Colorado}.
+
+\bibitem{a:Nello:Svm}
+Nello Cristianini and John Shawe-Taylor.
+\newblock {\em An Introduction to Support Vector Machines and Other
+  Kernel-based Learning Methods}.
+\newblock 0070428077. The Press Syndicate at the University of Cambridge, March
+  2000.
+
+\bibitem{a:rcnn}
+Ross Girshick; Jeff Donahue;~Trevor Darrell and Jitendra Malik.
+\newblock Rich feature hierarchies for accurate object detection and semantic
+  segmentation.
+\newblock In {\em IEEE Conference on Computer Vision and Pattern Recognition}.
+
+\bibitem{a:Daud2010}
+Ali Daud, Juanzi Li, Lizhu Zhou, and Faqir Muhammad.
+\newblock Knowledge discovery through directed probabilistic topic models: a
+  survey.
+\newblock {\em Frontiers of Computer Science in China}, 4(2):280--301, 2010.
+
+\bibitem{a:b}
+Mark~Steyvers2 David~Newman1, Padhraic~Smyth1.
+\newblock Scalable parallel topic models.
+\newblock {\em Journal of Intelligence Community Research and Development},
+  2006.
+
+\bibitem{a:inter}
+Klamer Schutte; Henri Bouma; John Schavemaker; Laura Daniele; Maya Sappelli;
+  Gijs Koot; Pieter Eendebak; George Azzopardi; Martijn Spitters;~Maaike
+  de~Boer; Maarten Kruithof; Paul~Brandt.
+\newblock Interactive detection of incrementally learned concepts in images
+  with ranking and semantic query interpretation.
+\newblock In {\em 13th International Workshop on Content-Based Multimedia
+  Indexing (CBMI)}.
+
+\bibitem{a:ella}
+E.~Eaton and P.~L. Ruvolo.
+\newblock Ella: An efficient lifelong learning algorithm.
+\newblock In {\em inProc. of the 30th Int. Conf. on Machine Learning
+  (ICML-13)}.
+
+\bibitem{a:ML}
+Aur\'{e}lien G\'{e}.
+
+\bibitem{a:udos}
+K.~Gondow.
+\newblock Homepage for an educational operating system udos.
+
+\bibitem{a:ck}
+Masaru Ohba;~Katsuhiko Gondow.
+\newblock Toward mining “concept keywords” from identifiers in large
+  software projects.
+\newblock In {\em Proceeding MSR '05 Proceedings of the 2005 international
+  workshop on Mining software repositories}, 2005.
+
+\bibitem{a:Spark3}
+Spark~Programming Guide.
+\newblock viewed on:, 01 2017.
+
+\bibitem{a:Spark1}
+Patrick Wendell Matei~Zaharia Holden~Karau, Andy~Konwinski.
+\newblock {\em Learning Spark Lightning-Fast Big Data Analysis}.
+\newblock 9781449358624. O'Reilly Media, January 2015.
+
+\bibitem{a:Huang2008}
+Fang Huang.
+\newblock {\em Using Language Models and Topic Models for XML Retrieval}, pages
+  94--102.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2008.
+
+\bibitem{a:BigData}
+Fern Halper Marcia~Kaufman Judith~Hurwitz, Alan~Nugent.
+\newblock {\em Big Data For Dummies}.
+\newblock 9781118504222. John Wiley and Sons, Inc., April 2013.
+
+\bibitem{a:ont2}
+Mostafa M. Hassan; Fakhri Karray; Mohamed~S. Kamel.
+\newblock Automatic document topic identification using wikipedia hierarchical
+  ontology.
+\newblock In {\em The 11th International Conference on Information Sciences,
+  Signal Processing and their Applications}, 2012.
+
+\bibitem{a:comm}
+A.~Lakhdari, A.~Chorana, H.~Cherroun, and A.~Rezgui.
+\newblock A link strength based label propagation algorithm for community
+  detection.
+\newblock In {\em 2016 IEEE International Conferences on Big Data and Cloud
+  Computing (BDCloud), Social Computing and Networking (SocialCom), Sustainable
+  Computing and Communications (SustainCom) (BDCloud-SocialCom-SustainCom)},
+  pages 362--369, Oct 2016.
+
+\bibitem{a:kmeansExple}
+Victor Lavrenko and Charles Sutton.
+\newblock Kmeans clustering, 2011.
+
+\bibitem{a:Tom:MachineLearning}
+Tom~M. Mitchell.
+\newblock {\em Machine Learning}.
+\newblock 0070428077. McGraw-Hill Science / Engineering / Math, March 1997.
+
+\bibitem{a:SvmSlides}
+Andrew~W. Moore.
+\newblock Support vector machines, Nov 2001.
+
+\bibitem{a:tdtmetric}
+NIST.
+\newblock {\em The 2004 Topic Detection and Tracking (TDT2004) Task Definition
+  and Evaluation Plan}, 2004.
+
+\bibitem{a:ont}
+Sonal Jain;~Jyoti Pareek.
+\newblock Automatic topic(s) identification from learning material: An
+  ontological approach.
+\newblock In {\em Second International Conference on Computer Engineering and
+  Applications}, 2010.
+
+\bibitem{a:online}
+Foteini Markatopoulou; Vasileios Mezaris;~Ioannis Patras.
+\newblock Online multi-task learning for semantic concept detection in video.
+\newblock In {\em IEEE International Conference on Image Processing (ICIP)}.
+
+\bibitem{a:colt92}
+Richard~Benjamins Rudi~Studer and Dieter Fensel.
+\newblock Knowledge engineering: Principles and methods.
+\newblock {\em Data and Knowledge Engineering}, 1989.
+
+\bibitem{a:tfidf}
+Clementty Salton.
+\newblock On the construction of effective vocabularies for information
+  retrieval[c].
+\newblock In {\em Proceedings of the 1973 Meeting on Programming Languages and
+  Information Retrieval}.
+
+\bibitem{a:vsm}
+G.~Salton.
+\newblock {\em The SMART Retrieval System---Experiments in Automatic Document
+  Processing}.
+\newblock Prentice-Hall, Inc., Upper Saddle River, NJ, USA, 1971.
+
+\bibitem{a:Flink}
+Hari~Rajaram Sameer~Wadkar.
+\newblock {\em Flink in Action}.
+\newblock 978-1617293924. Manning Publications, September 2016.
+
+\bibitem{a:Spark2}
+Sean Owen Josh~Wills Sandy~Ryza, Uri~Laserson.
+\newblock {\em Advanced Analytics with Spark Patterns for learning from Data at
+  scale}.
+\newblock 978-1-491-91276-8. O'Reilly Media, April 2015.
+
+\bibitem{a:arabic}
+Kheireddine Abainia; Siham Ouamour;~Halim Sayoud.
+\newblock Topic identification of noisy arabic texts using graph approaches.
+\newblock In {\em 26th International Workshop on Database and Expert Systems
+  Applications (DEXA)}.
+
+\bibitem{a:amazon}
+Amazon Team.
+\newblock What is streaming data?, Jan 2017.
+
+\bibitem{a:labelprop}
+R\'{e}ka~Albert Usha Nandini~Raghavan and Soundar Kumara.
+\newblock Near linear time algorithm to detect community structures in
+  large-scale networks.
+\newblock {\em Phys. Rev. E 76}, 2007.
+
+\bibitem{a:yangcomp}
+Yiming Yang and Jan~O. Pedersen.
+\newblock A comparative study on feature selection in text categorization.
+\newblock In {\em Proceedings of the Fourteenth International Conference on
+  Machine Learning}, ICML '97, pages 412--420, San Francisco, CA, USA, 1997.
+  Morgan Kaufmann Publishers Inc.
+
+\end{thebibliography}

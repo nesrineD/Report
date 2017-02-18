@@ -1,0 +1,104 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: thesis.aux
+White space in argument---line 19 of file thesis.aux
+ : \citation{a:Beyond
+ :                    the hype}
+I'm skipping whatever remains of this command
+White space in argument---line 22 of file thesis.aux
+ : \citation{a:analyzer
+ :                      http://www.sbmac.org.br/dincon/trabalhos/PDF/statistics/68066.pdf}
+I'm skipping whatever remains of this command
+White space in argument---line 145 of file thesis.aux
+ : \citation{a:J.
+ :                Uijlings}
+I'm skipping whatever remains of this command
+White space in argument---line 146 of file thesis.aux
+ : \citation{K.
+ :              van de Sande}
+I'm skipping whatever remains of this command
+White space in argument---line 147 of file thesis.aux
+ : \citation{T.
+ :              Gevers}
+I'm skipping whatever remains of this command
+White space in argument---line 148 of file thesis.aux
+ : \citation{and
+ :               A. Smeulders. Selective search for object recognition.IJCV}
+I'm skipping whatever remains of this command
+The style file: plain.bst
+Database file #1: all_publications.bib
+Warning--entry type for "a:gartner" isn't style-file defined
+--line 148 of file all_publications.bib
+Warning--entry type for "a:SvmSlides" isn't style-file defined
+--line 160 of file all_publications.bib
+Warning--entry type for "a:Amazon" isn't style-file defined
+--line 168 of file all_publications.bib
+Warning--entry type for "a:Akidu" isn't style-file defined
+--line 176 of file all_publications.bib
+Warning--entry type for "a:Spark3" isn't style-file defined
+--line 184 of file all_publications.bib
+Repeated entry---line 256 of file all_publications.bib
+ : @inproceedings{a:online
+ :                        ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 266 of file all_publications.bib
+ :  author = { Aur\'{e}lien G\'{e}}
+ :                                 ron},
+I'm skipping whatever remains of this entry
+Warning--entry type for "a:udos" isn't style-file defined
+--line 275 of file all_publications.bib
+Warning--entry type for "a:kmeansExple" isn't style-file defined
+--line 332 of file all_publications.bib
+Warning--I didn't find a database entry for "a:https://brightplanet.com/2012/06/structured-vs-unstructured-data/"
+Warning--I didn't find a database entry for "a:https://jeremyronk.wordpress.com/2014/09/01/structured-semi-structured-and-unstructured-data/"
+Warning--I didn't find a database entry for "a:https://www.scm.tees.ac.uk/isg/aia/nlp/NLP-overview.pdf"
+Warning--I didn't find a database entry for "a:mapR"
+Warning--I didn't find a database entry for "a:comp"
+Warning--I didn't find a database entry for "a:silhouette"
+Warning--I didn't find a database entry for "a:def"
+Warning--I didn't find a database entry for "standford"
+Warning--I didn't find a database entry for "a:kmeans"
+Warning--I didn't find a database entry for "a:parser"
+Warning--I didn't find a database entry for "a:concept"
+Warning--I didn't find a database entry for "2013."
+Warning--I didn't find a database entry for "a:stem"
+Warning--I didn't find a database entry for "a:lemma"
+Warning--to sort, need author, editor, or key in a:IBM
+Warning--to sort, need author, editor, or key in a:def1
+Warning--to sort, need author or key in a:gartner
+Warning--to sort, need author, editor, or key in a:veracity
+Too many commas in name 1 of "Judith Hurwitz, Alan Nugent, Fern Halper, Marcia Kaufman" for entry a:BigData
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Holden Karau, Andy Konwinski, Patrick Wendell, Matei Zaharia" for entry a:Spark1
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "Sandy Ryza, Uri Laserson, Sean Owen, Josh Wills" for entry a:Spark2
+while executing---line 1049 of file plain.bst
+Name 1 in "Rudi Studer, Richard Benjamins, and Dieter Fensel" has a comma at the end for entry a:colt92
+while executing---line 1049 of file plain.bst
+Warning--empty author and editor in a:def1
+Warning--empty author and editor in a:IBM
+Warning--empty author and editor in a:veracity
+Warning--empty year in a:wiki
+Warning--can't use both author and editor fields in a:Nello:Svm
+Warning--empty year in a:rcnn
+Warning--empty year in a:inter
+Warning--empty year in a:ella
+Warning--empty title in a:ML
+Warning--empty publisher in a:ML
+Warning--empty year in a:ML
+Too many commas in name 1 of "Holden Karau, Andy Konwinski, Patrick Wendell, Matei Zaharia" for entry a:Spark1
+while executing---line 1090 of file plain.bst
+Warning--can't use both author and editor fields in a:Spark1
+Warning--can't use both author and editor fields in a:Huang2008
+Too many commas in name 1 of "Judith Hurwitz, Alan Nugent, Fern Halper, Marcia Kaufman" for entry a:BigData
+while executing---line 1090 of file plain.bst
+Warning--can't use both author and editor fields in a:BigData
+Warning--can't use both author and editor fields in a:Tom:MachineLearning
+Warning--empty year in a:online
+Name 1 in "Rudi Studer, Richard Benjamins, and Dieter Fensel" has a comma at the end for entry a:colt92
+while executing---line 1090 of file plain.bst
+Warning--empty year in a:tfidf
+Warning--can't use both author and editor fields in a:Flink
+Too many commas in name 1 of "Sandy Ryza, Uri Laserson, Sean Owen, Josh Wills" for entry a:Spark2
+while executing---line 1090 of file plain.bst
+Warning--can't use both author and editor fields in a:Spark2
+Warning--empty year in a:arabic
+(There were 16 error messages)

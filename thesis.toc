@@ -1,0 +1,6 @@
+\contentsline {chapter}{\numberline {1}State of the Art}{1}
+\contentsline {chapter}{\numberline {2}Contribution}{3}
+\contentsline {section}{\numberline {2.1}Preprocessing}{3}
+\contentsline {section}{\numberline {2.2}Approach}{3}
+\contentsline {subsection}{\numberline {2.2.1}Model construction and learning}{3}
+\contentsline {subsection}{\numberline {2.2.2}Model testing}{4}
